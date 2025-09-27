@@ -1,11 +1,10 @@
-
 package Modelo;
 
 import java.time.LocalDate;
 
-
 public class alumno {
-    private int id = -1; 
+
+    private int id = -1;
     private String nombre; //Varchar
     private LocalDate fechaNac; // datetime
     private boolean activo; //tinyint
@@ -48,8 +47,5 @@ public class alumno {
     public void setActivo(boolean activo) {
         this.activo = activo;
     }
-    
-    
-    
-    
+
 }
