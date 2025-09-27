@@ -1,6 +1,6 @@
 package Modelo;
 
-import com.sun.jdi.connect.spi.Connection;
+import java.sql.Connection;
 import org.mariadb.jdbc.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -23,9 +23,9 @@ public class Conexion {
         if (conexion == null) {
             try {
                 Class.forName("org.mariadb.jdbc.Driver");
-                conexion = (Connection) DriverManager.getConnection("jdbc:mariadb://localhost/sgulp_equipo_8","root", ""); 
+                conexion = (Connection) DriverManager.getConnection(url,usuario,password); 
             } catch (SQLException | ClassNotFoundException ex) {
-                System.out.println("No se puede conectar o no se puedo cargar el driver ");
+                System.out.println("No se puede conectar o no se puedo cargar el driver " + ex.getMessage());
             }
         }
         return conexion;
