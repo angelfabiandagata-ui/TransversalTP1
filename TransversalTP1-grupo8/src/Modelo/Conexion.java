@@ -19,7 +19,7 @@ public class Conexion {
         this.password = password;
     }
 
-    public Connection buscarconexion() {
+    public Connection buscarConexion() {
         if (conexion == null) {
             try {
                 Class.forName("org.mariadb.jdbc.Driver");

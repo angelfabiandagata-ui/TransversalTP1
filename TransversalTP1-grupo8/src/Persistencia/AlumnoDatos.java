@@ -26,6 +26,7 @@ public class AlumnoDatos {
             ps.setBoolean(5, a.getEstado());
 
             ps.executeUpdate();
+            ps.close();
             System.out.println("Alumno guardado con éxito");
         } catch (SQLException ex) {
             System.out.println("Error al guardar alumno: " + ex.getMessage());
