@@ -4,7 +4,8 @@
  */
 package Persistencia;
 
-import com.sun.jdi.connect.spi.Connection;
+import Modelo.Alumno;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -21,12 +22,12 @@ public class AlumnoDatos {
    public void guardarAlumno(Alumno a) {
     String sql = "INSERT INTO alumno (dni, apellido, nombre, fechaNacimiento, estado) VALUES (?,?,?,?,?)";
     try {
-        PreparedStatement ps = con.(sql);
+        PreparedStatement ps = con.prepareStatement(sql);
         ps.setInt(1, a.getDni());
         ps.setString(2, a.getApellido());
         ps.setString(3, a.getNombre());
-        ps.setDate(4, new java.sql.Date(a.getFechaNacimiento().getTime())); 
-        ps.setBoolean(5, a.isEstado());
+        ps.setDate(4, java.sql.Date.valueOf(a.getFechadenacimiento()));
+        ps.setBoolean(5, a.getEstado());
 
         ps.executeUpdate();
         ps.close();
@@ -35,9 +36,6 @@ public class AlumnoDatos {
         System.out.println("Error al guardar alumno: " + ex.getMessage());
     }
 }
-
-
-    }
 
    /* public alumno buscarAlumno(int id) {
 
@@ -55,3 +53,4 @@ public class AlumnoDatos {
 
     }*/ //falta que abde pero ya agregue asi despues lo voy haciendo funcionar.
 }
+
