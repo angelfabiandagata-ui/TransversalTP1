@@ -8,6 +8,6 @@ package Modelo;
  *
  * @author angel
  */
-public class NewClass {
+public class Conexion {
     
 }
