@@ -2,7 +2,7 @@ package Modelo;
 
 import java.time.LocalDate;
 
-public class alumno {
+public class Alumno {
 
      private int idAlumno;//int
      private int dni;//int
@@ -11,7 +11,7 @@ public class alumno {
      private LocalDate fechadenacimiento;//date
      private boolean estado;//tinyint
 
-    public alumno(int idAlumno, int dni, String apellido, String nombre, LocalDate fechadenacimiento, boolean estado) {
+    public Alumno(int idAlumno, int dni, String apellido, String nombre, LocalDate fechadenacimiento, boolean estado) {
         this.idAlumno = idAlumno;
         this.dni = dni;
         this.apellido = apellido;
