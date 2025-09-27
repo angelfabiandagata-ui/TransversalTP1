@@ -4,77 +4,35 @@
  */
 package Persistencia;
 
-import java.time.LocalDate;
+import com.sun.jdi.connect.spi.Connection;
 
 //Atributos alumnodatos
 public class AlumnoDatos {
-     private int idAlumno;//int
-     private int dni;//int
-     private String apellido;//varchar
-     private String nombre;//varchar
-     private LocalDate fechadenacimiento;//date
-     private boolean estado;//tinyint
 
-    public AlumnoDatos(int idAlumno, int dni, String apellido, String nombre, LocalDate fechadenacimiento, boolean estado) {
-        this.idAlumno = idAlumno;
-        this.dni = dni;
-        this.apellido = apellido;
-        this.nombre = nombre;
-        this.fechadenacimiento = fechadenacimiento;
-        this.estado = estado;
+    private Connection con = null;
+
+    public AlumnoDatos(Connection conexion) {
+        this.con = conexion;
+
+    }/*
+
+    public void guardarAlumno(Alumno a) {
+
     }
 
-    public int getIdAlumno() {
-        return idAlumno;
+    public alumno buscarAlumno(int id) {
+
     }
 
-    public void setIdAlumno(int idAlumno) {
-        this.idAlumno = idAlumno;
+    public List<Alumno> listarAlumnos() {
+
     }
 
-    public int getDni() {
-        return dni;
+    public void actualizarAlumno(Alumno a) {
+
     }
 
-    public void setDni(int dni) {
-        this.dni = dni;
-    }
+    public void borrarAlumno(int id) {
 
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public LocalDate getFechadenacimiento() {
-        return fechadenacimiento;
-    }
-
-    public void setFechadenacimiento(LocalDate fechadenacimiento) {
-        this.fechadenacimiento = fechadenacimiento;
-    }
-
-    public boolean getEstado() {
-        return estado;
-    }
-
-    public void setEstado(boolean estado) {
-        this.estado = estado;
-    }
-
-    @Override
-    public String toString() {
-        return "-AlumnoDatos- " + " idAlumno: " + idAlumno + ", dni: " + dni + ", apellido: " + apellido + ", nombre: " + nombre + ", fechadenacimiento: " + fechadenacimiento + ", estado: " + estado;
-    }
-    
+    }*/ //falta que abde pero ya agregue asi despues lo voy haciendo funcionar.
 }
