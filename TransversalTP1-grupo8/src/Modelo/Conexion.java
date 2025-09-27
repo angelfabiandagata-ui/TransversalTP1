@@ -23,7 +23,7 @@ public class Conexion {
         if (conexion == null) {
             try {
                 Class.forName("org.mariadb.jdbc.Driver");
-                conexion = (Connection) DriverManager.getConnection("jdbc:mariadb://localhost/universidadulp","root", ""); 
+                conexion = (Connection) DriverManager.getConnection("jdbc:mariadb://localhost/sgulp_equipo_8","root", ""); 
             } catch (SQLException | ClassNotFoundException ex) {
                 System.out.println("No se puede conectar o no se puedo cargar el driver ");
             }
