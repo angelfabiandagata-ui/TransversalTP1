@@ -4,6 +4,7 @@ import Modelo.Alumno;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 //Atributos alumnodatos
 public class AlumnoDatos {
@@ -44,8 +45,18 @@ public class AlumnoDatos {
     public void actualizarAlumno(Alumno a) {
 
     }
-
+     */
     public void borrarAlumno(int id) {
+        try {
+            String sql = "DELETE FROM `alumno` WHERE idAlumno = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            ps.close();
+            System.out.println("Alumno borrado con exito");
+        } catch (SQLException ex) {
+            System.out.println("Error al borrar el alumno" + ex.getMessage());
+        }
 
-    }*/ //falta que abde pero ya agregue asi despues lo voy haciendo funcionar.
+    }
 }
