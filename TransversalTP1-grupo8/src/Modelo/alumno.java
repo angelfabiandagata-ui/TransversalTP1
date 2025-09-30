@@ -4,15 +4,14 @@ import java.time.LocalDate;
 
 public class Alumno {
 
-     private int idAlumno;//int
-     private int dni;//int
-     private String apellido;//varchar
-     private String nombre;//varchar
-     private LocalDate fechadenacimiento;//date
-     private boolean estado;//tinyint
+    private int idAlumno;//int
+    private int dni;//int
+    private String apellido;//varchar
+    private String nombre;//varchar
+    private LocalDate fechadenacimiento;//date
+    private boolean estado;//tinyint
 
-    public Alumno(int idAlumno, int dni, String apellido, String nombre, LocalDate fechadenacimiento, boolean estado) {
-        this.idAlumno = idAlumno;
+    public Alumno(int dni, String apellido, String nombre, LocalDate fechadenacimiento, boolean estado) {
         this.dni = dni;
         this.apellido = apellido;
         this.nombre = nombre;
@@ -42,7 +41,8 @@ public class Alumno {
 
     public void setApellido(String apellido) {
         this.apellido = apellido;
- }
+    }
+
     public String getNombre() {
         return nombre;
     }
@@ -71,5 +71,5 @@ public class Alumno {
     public String toString() {
         return "-AlumnoDatos- " + " idAlumno: " + idAlumno + ", dni: " + dni + ", apellido: " + apellido + ", nombre: " + nombre + ", fechadenacimiento: " + fechadenacimiento + ", estado: " + estado;
     }
-    
+
 }
