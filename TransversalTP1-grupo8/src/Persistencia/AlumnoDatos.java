@@ -3,8 +3,14 @@ package Persistencia;
 import Modelo.Alumno;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
+import javax.naming.spi.DirStateFactory;
 import javax.swing.JOptionPane;
+import javax.swing.SpringLayout;
+import org.mariadb.jdbc.client.result.Result;
+import org.mariadb.jdbc.client.result.ResultSetMetaData;
 
 //Atributos alumnodatos
 public class AlumnoDatos {
@@ -13,7 +19,6 @@ public class AlumnoDatos {
 
     public AlumnoDatos(Connection conexion) {
         this.con = conexion;
-
     }
 
     public void guardarAlumno(Alumno a) {
@@ -37,11 +42,30 @@ public class AlumnoDatos {
     /* public alumno buscarAlumno(int id) {
 
     }
-
+     */
     public List<Alumno> listarAlumnos() {
+        String sql = "SELECT * FROM `alumno` WHERE `estado` = true";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet resultado = ps.executeQuery();
 
+            while (resultado.next()) {
+                System.out.println("Id: " + resultado.getInt("idAlumno"));
+                System.out.println("Dni:" + resultado.getInt("dni"));
+                System.out.println("Apellido: " + resultado.getString("apellido"));
+                System.out.println("Nombre: " + resultado.getString("nombre"));
+                System.out.println("Fecha nacimiento: " + resultado.getDate("FechaNacimiento"));
+                System.out.println("-----------------------------------------------------------");
+            }
+            
+        } catch (SQLException ex) {
+            System.out.println("");
+        }
+        
+        return null;
     }
 
+    /*
     public void actualizarAlumno(Alumno a) {
 
     }

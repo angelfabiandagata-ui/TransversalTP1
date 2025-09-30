@@ -13,11 +13,11 @@ public class TransversalTP1Grupo8 {
         Conexion c = new Conexion("jdbc:mariadb://localhost:3306/sgulp_equipo_8", "root", "");
         Connection con = c.buscarConexion();
         AlumnoDatos al = new AlumnoDatos(con);
-//        Alumno alm = new Alumno(1, 47267078, "Serrano", "Lucas", LocalDate.of(2006, Month.MARCH, 31), true);
-//        al.guardarAlumno(alm);
+        Alumno alm = new Alumno(1, 47267078, "Serrano", "Lucas", LocalDate.of(2006, Month.MARCH, 31), true);
+        al.guardarAlumno(alm);
         //Prueba borrar alumno
-        al.borrarAlumno(1);
-        
+        al.borrarAlumno(8);
+        //al.listarAlumnos();
     }
 
 }
