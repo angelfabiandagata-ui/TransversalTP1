@@ -2,7 +2,9 @@ package Vista;
 
 import Modelo.Alumno;
 import Modelo.Conexion;
+import Modelo.Materia;
 import Persistencia.AlumnoDatos;
+import Persistencia.MateriaData;
 import java.sql.Connection;
 import java.time.LocalDate;
 import java.time.Month;
@@ -25,6 +27,22 @@ public class TransversalTP1Grupo8 {
         
         Alumno alumno5 = new Alumno(44953034, "Miranda", "Teo", LocalDate.of(2003, Month.JUNE, 30), true);
 
+        //CREACION DE MATERIAS
+        Materia materia1 = new Materia(1,"Web",2025,true);
+        
+        Materia materia2 = new Materia(2,"Laboratorio",2025,true);
+        
+        Materia materia3 = new Materia(3,"Base de Datos",2025,true);
+        
+        MateriaData md = new MateriaData(con);
+        
+//agregar materia       
+md.guardarMateria(materia1);
+
+//elimar materia
+md.borrarMateria(1);
+        
+        
 
 //GUARDAR ALUMNO
 
