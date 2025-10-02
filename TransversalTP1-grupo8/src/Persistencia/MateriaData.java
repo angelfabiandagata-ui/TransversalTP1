@@ -53,11 +53,10 @@ public class MateriaData {
             ResultSet resultado = ps.executeQuery();
 
             while (resultado.next()) {
-                System.out.println("Id: " + resultado.getInt("idAlumno"));
-                System.out.println("Dni:" + resultado.getInt("dni"));
-                System.out.println("Apellido: " + resultado.getString("apellido"));
-                System.out.println("Nombre: " + resultado.getString("nombre"));
-                System.out.println("Fecha nacimiento: " + resultado.getDate("FechaNacimiento"));
+                System.out.println("idmateria: " + resultado.getInt("idMateria"));
+                System.out.println("nombre:" + resultado.getString("nombre"));
+                System.out.println("año: " + resultado.getInt("anio"));
+                System.out.println("estado: " + resultado.getBoolean("estado"));
                 System.out.println("-----------------------------------------------------------");
             }
 
@@ -99,18 +98,18 @@ public class MateriaData {
 //           );
 //       }
 //}
-//    public void borrarMateria(int id) {
-//        try {
-//            String sql = "DELETE FROM `materia` WHERE idAlumno = ?";
-//            PreparedStatement ps = con.prepareStatement(sql);
-//            ps.setInt(1, id);
-//            ps.executeUpdate();
-//            ps.close();
-//            System.out.println("Alumno borrado con exito");
-//        } catch (SQLException ex) {
-//            System.out.println("Error al borrar el alumno" + ex.getMessage());
-//        }
-//
-//    }
+    public void borrarMateria(int id) {
+        try {
+            String sql = "DELETE FROM `materia` WHERE idmateria = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            ps.close();
+            System.out.println("Materia borrada con exito");
+        } catch (SQLException ex) {
+            System.out.println("Error al borrar la materia" + ex.getMessage());
+        }
+
+    }
 }
    
