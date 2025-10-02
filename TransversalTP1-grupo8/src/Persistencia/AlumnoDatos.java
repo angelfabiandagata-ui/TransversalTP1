@@ -39,12 +39,13 @@ public class AlumnoDatos {
         }
     }
 
-     public Alumno buscarAlumno(int id) {
-         String sql = "SELECT `idAlumno`, `dni`, `apellido`, `nombre`, `fechaNacimiento`, `estado` FROM `alumno` WHERE `idAlumno` = ?";
-         try {
-             PreparedStatement ps = con.prepareStatement(sql);
-             ps.setInt(1, id);
-              ResultSet resultado = ps.executeQuery();
+    public Alumno buscarAlumno(int id) {
+        String sql = "SELECT `idAlumno`, `dni`, `apellido`, `nombre`, `fechaNacimiento`, `estado` FROM `alumno` WHERE `idAlumno` = ?";
+        Alumno alumno = null;
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet resultado = ps.executeQuery();
 
             while (resultado.next()) {
                 System.out.println("Id: " + resultado.getInt("idAlumno"));
@@ -54,13 +55,13 @@ public class AlumnoDatos {
                 System.out.println("Fecha nacimiento: " + resultado.getDate("FechaNacimiento"));
                 System.out.println("-----------------------------------------------------------");
             }
-             System.out.println();
-         } catch (SQLException e) {
-             System.out.println("Alumno no encontrado");
-         }
-        return null;
+            System.out.println();
+        } catch (SQLException e) {
+            System.out.println("Alumno no encontrado");
+        }
+        return alumno;
     }
-     
+
     public List<Alumno> listarAlumnos() {
         String sql = "SELECT * FROM `alumno` WHERE `estado` = true";
         try {
@@ -83,37 +84,53 @@ public class AlumnoDatos {
         return null;
     }
 
-    /*
-    public void actualizarAlumno(Alumno a) {
+    public void actualizarAlumno(Alumno alumno) {
+        try {
+            String sql = "UPDATE `alumno` SET dni = ?,apellido= ?,nombre=?,fechaNacimiento=? WHERE idAlumno = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, alumno.getDni());
+            ps.setString(2, alumno.getApellido());
+            ps.setString(3, alumno.getNombre());
+            ps.setDate(4, java.sql.Date.valueOf(alumno.getFechadenacimiento()));
+            ps.setInt(5, alumno.getIdAlumno());
+            ps.executeUpdate();
+            ps.close();
+            System.out.println("Alumno actualizado correctamente!!");
+        } catch (SQLException ex) {
+            System.out.println("Error al actualizar el alumno" + ex.getMessage()
+            );
+        }
 
     }
-     */
-   public void bajaLogica(int id){
-       try {
-           String sql = "UPDATE `alumno` SET `estado`='0' WHERE `idAlumno` = ?";
-           PreparedStatement ps = con.prepareStatement(sql);
-           ps.setInt(1, id);
-           ps.executeUpdate();
-           ps.close();
-           System.out.println("Alumno dado de baja correctamente!!");
-       } catch (SQLException ex) {
-           System.out.println("Error al dar de baja el alumno" + ex.getMessage()
-           );
-       }
-}
-        public void altaLogica(int id){
-              try {
-           String sql = "UPDATE `alumno` SET `estado`='1' WHERE `idAlumno` = ?";
-           PreparedStatement ps = con.prepareStatement(sql);
-           ps.setInt(1, id);
-           ps.executeUpdate();
-           ps.close();
-           System.out.println("Alumno dado de alta correctamente!!");
-       } catch (SQLException ex) {
-           System.out.println("Error al dar de alta el alumno" + ex.getMessage()
-           );
-       }
-}
+
+    public void bajaLogica(int id) {
+        try {
+            String sql = "UPDATE `alumno` SET `estado`='0' WHERE `idAlumno` = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            ps.close();
+            System.out.println("Alumno dado de baja correctamente!!");
+        } catch (SQLException ex) {
+            System.out.println("Error al dar de baja el alumno" + ex.getMessage()
+            );
+        }
+    }
+
+    public void altaLogica(int id) {
+        try {
+            String sql = "UPDATE `alumno` SET `estado`='1' WHERE `idAlumno` = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            ps.close();
+            System.out.println("Alumno dado de alta correctamente!!");
+        } catch (SQLException ex) {
+            System.out.println("Error al dar de alta el alumno" + ex.getMessage()
+            );
+        }
+    }
+
     public void borrarAlumno(int id) {
         try {
             String sql = "DELETE FROM `alumno` WHERE idAlumno = ?";
