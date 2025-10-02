@@ -5,70 +5,74 @@
 package Persistencia;
 
 import Modelo.Alumno;
+import Modelo.Materia;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-//Atributos
+/**
+ *
+ * @author Ema
+ */
 public class MateriaData {
+    
+     private Connection con = null;
 
-//     private Connection con = null;
-//
-//    public MateriaData (Connection conexion) {
-//        this.con = conexion;
-//    }
-//
-//    public void guardarMateria(materia a) {
-//        String sql = "INSERT INTO alumno (dni, apellido, nombre, fechaNacimiento, estado) VALUES (?,?,?,?,?)";
-//        try {
-//            PreparedStatement ps = con.prepareStatement(sql);
-//            ps.setInt(1, a.getDni());
-//            ps.setString(2, a.getApellido());
-//            ps.setString(3, a.getNombre());
-//            ps.setDate(4, java.sql.Date.valueOf(a.getFechadenacimiento()));
-//            ps.setBoolean(5, a.getEstado());
-//
-//            ps.executeUpdate();
-//            ps.close();
-//            System.out.println("Alumno guardado con exito");
-//        } catch (SQLException ex) {
-//            System.out.println("Error al guardar alumno: " + ex.getMessage());
-//        }
-//    }
-//
-//    /* public alumno buscarAlumno(int id) {
-//
-//    }
-//     */
-//    public List<Alumno> listarAlumnos() {
-//        String sql = "SELECT * FROM `alumno` WHERE `estado` = true";
-//        try {
-//            PreparedStatement ps = con.prepareStatement(sql);
-//            ResultSet resultado = ps.executeQuery();
-//
-//            while (resultado.next()) {
-//                System.out.println("Id: " + resultado.getInt("idAlumno"));
-//                System.out.println("Dni:" + resultado.getInt("dni"));
-//                System.out.println("Apellido: " + resultado.getString("apellido"));
-//                System.out.println("Nombre: " + resultado.getString("nombre"));
-//                System.out.println("Fecha nacimiento: " + resultado.getDate("FechaNacimiento"));
-//                System.out.println("-----------------------------------------------------------");
-//            }
-//
-//        } catch (SQLException ex) {
-//            System.out.println("");
-//        }
-//
-//        return null;
-//    }
-//
-//    /*
+    public MateriaData (Connection conexion) {
+        this.con = conexion;
+    }
+
+    public void guardarMateria(Materia a) {
+        String sql = "INSERT INTO materia(idMateria, nombre, anio, estado) VALUES (?,?,?,?)";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, a.getIdmateria());
+            ps.setString(2, a.getNombre());
+            ps.setInt(3, a.getAnio());
+            ps.setBoolean(4,a.getEstado());
+            ps.setBoolean(5, a.getEstado());
+
+            ps.executeUpdate();
+            ps.close();
+            System.out.println("Materia guardado con exito");
+        } catch (SQLException ex) {
+            System.out.println("Error al guardar la Materia: " + ex.getMessage());
+        }
+    }
+
+    /* public alumno buscarAlumno(int id) {
+
+    }
+     */
+    public List<Materia> listarMaterias() {
+        String sql = "SELECT * FROM `materias`";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet resultado = ps.executeQuery();
+
+            while (resultado.next()) {
+                System.out.println("Id: " + resultado.getInt("idAlumno"));
+                System.out.println("Dni:" + resultado.getInt("dni"));
+                System.out.println("Apellido: " + resultado.getString("apellido"));
+                System.out.println("Nombre: " + resultado.getString("nombre"));
+                System.out.println("Fecha nacimiento: " + resultado.getDate("FechaNacimiento"));
+                System.out.println("-----------------------------------------------------------");
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("");
+        }
+
+        return null;
+    }
+
+    
 //    public void actualizarAlumno(Alumno a) {
 //
 //    }
-//     */
+//    
 //   public void bajaLogica(int id){
 //       try {
 //           String sql = "UPDATE `alumno` SET `estado`='0' WHERE `idAlumno` = ?";
@@ -108,5 +112,5 @@ public class MateriaData {
 //        }
 //
 //    }
-
+}
    

@@ -13,11 +13,11 @@ public class Materia {
     //atributos
     private int idmateria;
     private String nombre;
-    private String anio;   
+    private int anio;   
     private boolean estado;
 
     //constructor completo
-    public Materia(int idmateria, String nombre, String anio, boolean estado) {
+    public Materia(int idmateria, String nombre, int anio, boolean estado) {
         this.idmateria = idmateria;
         this.nombre = nombre;
         this.anio = anio;
@@ -41,16 +41,18 @@ public class Materia {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+   
+    
 
-    public String getAnio() {
+    public int getAnio() {
         return anio;
     }
 
-    public void setAnio(String anio) {
+    public void setAnio(int anio) {
         this.anio = anio;
     }
 
-    public boolean isEstado() {
+    public boolean getEstado() {
         return estado;
     }
 
@@ -58,5 +60,5 @@ public class Materia {
         this.estado = estado;
     }
     
-//final    
+ //final   
 }
