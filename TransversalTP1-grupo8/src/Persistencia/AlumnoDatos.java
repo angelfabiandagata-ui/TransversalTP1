@@ -39,10 +39,28 @@ public class AlumnoDatos {
         }
     }
 
-    /* public alumno buscarAlumno(int id) {
+     public Alumno buscarAlumno(int id) {
+         String sql = "SELECT `idAlumno`, `dni`, `apellido`, `nombre`, `fechaNacimiento`, `estado` FROM `alumno` WHERE `idAlumno` = ?";
+         try {
+             PreparedStatement ps = con.prepareStatement(sql);
+             ps.setInt(1, id);
+              ResultSet resultado = ps.executeQuery();
 
+            while (resultado.next()) {
+                System.out.println("Id: " + resultado.getInt("idAlumno"));
+                System.out.println("Dni:" + resultado.getInt("dni"));
+                System.out.println("Apellido: " + resultado.getString("apellido"));
+                System.out.println("Nombre: " + resultado.getString("nombre"));
+                System.out.println("Fecha nacimiento: " + resultado.getDate("FechaNacimiento"));
+                System.out.println("-----------------------------------------------------------");
+            }
+             System.out.println();
+         } catch (SQLException e) {
+             System.out.println("Alumno no encontrado");
+         }
+        return null;
     }
-     */
+     
     public List<Alumno> listarAlumnos() {
         String sql = "SELECT * FROM `alumno` WHERE `estado` = true";
         try {
