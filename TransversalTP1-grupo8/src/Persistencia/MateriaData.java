@@ -11,11 +11,37 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-/**
- *
- * @author Ema
- */
+//Atributos
 public class MateriaData {
+    private int idMateria;
+    private String Materia;
+//Constructor
+    public MateriaData(int idMateria, String Materia) {
+        this.idMateria = idMateria;
+        this.Materia = Materia;
+    }
+//Getter and setter
+    public int getIdMateria() {
+        return idMateria;
+    }
+
+    public void setIdMateria(int idMateria) {
+        this.idMateria = idMateria;
+    }
+
+    public String getMateria() {
+        return Materia;
+    }
+
+    public void setMateria(String Materia) {
+        this.Materia = Materia;
+    }
+
+    @Override
+    public String toString() {
+        return "MateriaData" + "idMateria:" + idMateria + ", Materia:" + Materia;
+    }
+}
     
 //     private Connection con = null;
 //
@@ -111,4 +137,5 @@ public class MateriaData {
 //        }
 //
 //    }
-}
+
+   
