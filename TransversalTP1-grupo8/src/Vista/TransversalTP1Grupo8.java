@@ -45,6 +45,8 @@ public class TransversalTP1Grupo8 {
 //ALTA LOGICA
 
         //al.altaLogica(11);
+        
+        al.buscarAlumno(13);
     }
     
 
