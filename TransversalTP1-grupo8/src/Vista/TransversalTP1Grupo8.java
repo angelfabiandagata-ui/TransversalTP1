@@ -67,15 +67,16 @@ md.borrarMateria(1);
 //BUSCAR ALUMNO  
 
         // al.buscarAlumno(13);
-        
-Alumno alumnoActualizado = new Alumno(
-        47267078, 
-        "Velez", 
-        "Damian", 
-        LocalDate.of(2006, Month.MARCH, 31), 
-        true);
-alumnoActualizado.setIdAlumno(11);
-        al.actualizarAlumno(alumnoActualizado);
+//ACTUALIZAR ALUMNO
+
+//Alumno alumnoActualizado = new Alumno(
+//        47267078, 
+//        "Velez", 
+//        "Damian", 
+//        LocalDate.of(2006, Month.MARCH, 31), 
+//        true);
+//alumnoActualizado.setIdAlumno(11);
+//        al.actualizarAlumno(alumnoActualizado);
     }
     
 
