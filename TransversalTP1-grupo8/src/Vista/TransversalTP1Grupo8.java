@@ -64,7 +64,19 @@ md.borrarMateria(1);
 
         //al.altaLogica(11);
         
-        al.buscarAlumno(13);
+//BUSCAR ALUMNO  
+
+        // al.buscarAlumno(13);
+//ACTUALIZAR ALUMNO
+
+//Alumno alumnoActualizado = new Alumno(
+//        47267078, 
+//        "Velez", 
+//        "Damian", 
+//        LocalDate.of(2006, Month.MARCH, 31), 
+//        true);
+//alumnoActualizado.setIdAlumno(11);
+//        al.actualizarAlumno(alumnoActualizado);
     }
     
 
