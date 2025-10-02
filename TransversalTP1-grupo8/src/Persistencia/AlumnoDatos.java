@@ -57,11 +57,11 @@ public class AlumnoDatos {
                 System.out.println("Fecha nacimiento: " + resultado.getDate("FechaNacimiento"));
                 System.out.println("-----------------------------------------------------------");
             }
-            
+
         } catch (SQLException ex) {
             System.out.println("");
         }
-        
+
         return null;
     }
 
@@ -70,6 +70,32 @@ public class AlumnoDatos {
 
     }
      */
+   public void bajaLogica(int id){
+       try {
+           String sql = "UPDATE `alumno` SET `estado`='0' WHERE `idAlumno` = ?";
+           PreparedStatement ps = con.prepareStatement(sql);
+           ps.setInt(1, id);
+           ps.executeUpdate();
+           ps.close();
+           System.out.println("Alumno dado de baja correctamente!!");
+       } catch (SQLException ex) {
+           System.out.println("Error al dar de baja el alumno" + ex.getMessage()
+           );
+       }
+}
+        public void altaLogica(int id){
+              try {
+           String sql = "UPDATE `alumno` SET `estado`='1' WHERE `idAlumno` = ?";
+           PreparedStatement ps = con.prepareStatement(sql);
+           ps.setInt(1, id);
+           ps.executeUpdate();
+           ps.close();
+           System.out.println("Alumno dado de alta correctamente!!");
+       } catch (SQLException ex) {
+           System.out.println("Error al dar de alta el alumno" + ex.getMessage()
+           );
+       }
+}
     public void borrarAlumno(int id) {
         try {
             String sql = "DELETE FROM `alumno` WHERE idAlumno = ?";

@@ -29,12 +29,23 @@ public class TransversalTP1Grupo8 {
 //GUARDAR ALUMNO
 
 //        al.guardarAlumno(alm);
+
 //BORRAR ALUMNO
 
         //al.borrarAlumno();
+        
 //LISTAR ALUMNOS
 
         //al.listarAlumnos();
+        
+//BAJA LOGICA
+
+        //al.bajaLogica(11);
+        
+//ALTA LOGICA
+
+        //al.altaLogica(11);
     }
+    
 
 }
