@@ -16,6 +16,7 @@ public class TransversalTP1Grupo8 {
         Connection con = c.buscarConexion();
         AlumnoDatos al = new AlumnoDatos(con);
         
+        
         //CREACION DE ALUMNOS
         Alumno alumno1 = new Alumno(47267078, "Serrano", "Lucas", LocalDate.of(2006, Month.MARCH, 31), true);
         

@@ -15,6 +15,8 @@ public class Menu extends javax.swing.JFrame {
      */
     public Menu() {
         initComponents();
+        this.setLocationRelativeTo(null);
+         
     }
 
     /**
@@ -31,6 +33,7 @@ public class Menu extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuAlumno = new javax.swing.JMenu();
+        AlumnoItem = new javax.swing.JMenuItem();
         jMenuMateria = new javax.swing.JMenu();
 
         jMenu1.setText("jMenu1");
@@ -59,6 +62,20 @@ public class Menu extends javax.swing.JFrame {
         );
 
         jMenuAlumno.setText("Alumno");
+        jMenuAlumno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuAlumnoActionPerformed(evt);
+            }
+        });
+
+        AlumnoItem.setText("Agregar Alumno");
+        AlumnoItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AlumnoItemActionPerformed(evt);
+            }
+        });
+        jMenuAlumno.add(AlumnoItem);
+
         jMenuBar1.add(jMenuAlumno);
 
         jMenuMateria.setText("Materia");
@@ -81,6 +98,17 @@ public class Menu extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jMenuAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuAlumnoActionPerformed
+                         
+
+    }//GEN-LAST:event_jMenuAlumnoActionPerformed
+
+    private void AlumnoItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlumnoItemActionPerformed
+        VistaAlumno vista = new VistaAlumno(); 
+    vista.setVisible(true);                
+    this.dispose(); 
+    }//GEN-LAST:event_AlumnoItemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -118,6 +146,7 @@ public class Menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem AlumnoItem;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
