@@ -15,6 +15,7 @@ public class VistaAlumno extends javax.swing.JFrame {
      */
     public VistaAlumno() {
         initComponents();
+        
     }
 
     /**
