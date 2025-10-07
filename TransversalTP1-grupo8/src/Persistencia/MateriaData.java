@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Persistencia;
 
 import Modelo.Alumno;
@@ -42,8 +38,28 @@ public class MateriaData {
         }
     }
 
-    /* public alumno buscarAlumno(int id) {
+    public Materia buscarAlumno(int id) {
+        String sql = "SELECT `idMateria`, `nombre`, `anio`, `estado` FROM `materia` WHERE `idMateria` = ?";
+        Materia materia = null;
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet resultado = ps.executeQuery();
 
+            while (resultado.next()) {
+                System.out.println("Id: " + resultado.getInt("idMateria"));
+                System.out.println("Nombre: " + resultado.getString("nombre"));
+                System.out.println("Anio: " + resultado.getString("anio"));
+                System.out.println("Estado: " + resultado.getBoolean("estado"));
+                System.out.println("-----------------------------------------------------------");
+            }
+            System.out.println();
+        } catch (SQLException e) {
+            System.out.println("Materia no encontrada");
+        }
+        return materia;
+    }
+    /* public alumno buscarAlumno(int id) {
     }
      */
     public List<Materia> listarMaterias() {
@@ -71,33 +87,33 @@ public class MateriaData {
 //    public void actualizarAlumno(Alumno a) {
 //
 //    }
-//    
-//   public void bajaLogica(int id){
-//       try {
-//           String sql = "UPDATE `alumno` SET `estado`='0' WHERE `idAlumno` = ?";
-//           PreparedStatement ps = con.prepareStatement(sql);
-//           ps.setInt(1, id);
-//           ps.executeUpdate();
-//           ps.close();
-//           System.out.println("Alumno dado de baja correctamente!!");
-//       } catch (SQLException ex) {
-//           System.out.println("Error al dar de baja el alumno" + ex.getMessage()
-//           );
-//       }
-//}
-//        public void altaLogica(int id){
-//              try {
-//           String sql = "UPDATE `alumno` SET `estado`='1' WHERE `idAlumno` = ?";
-//           PreparedStatement ps = con.prepareStatement(sql);
-//           ps.setInt(1, id);
-//           ps.executeUpdate();
-//           ps.close();
-//           System.out.println("Alumno dado de alta correctamente!!");
-//       } catch (SQLException ex) {
-//           System.out.println("Error al dar de alta el alumno" + ex.getMessage()
-//           );
-//       }
-//}
+    
+   public void bajaLogica(int id){
+       try {
+           String sql = "UPDATE `materia` SET `estado`='0' WHERE `idMateria` = ?";
+           PreparedStatement ps = con.prepareStatement(sql);
+           ps.setInt(1, id);
+           ps.executeUpdate();
+           ps.close();
+           System.out.println("Materia dada de baja correctamente!!");
+       } catch (SQLException ex) {
+           System.out.println("Error al dar de baja la materia" + ex.getMessage()
+           );
+       }
+}
+        public void altaLogica(int id){
+              try {
+           String sql = "UPDATE `materia` SET `estado`='1' WHERE `idMateria` = ?";
+           PreparedStatement ps = con.prepareStatement(sql);
+           ps.setInt(1, id);
+           ps.executeUpdate();
+           ps.close();
+           System.out.println("Materia dada de alta correctamente!!");
+       } catch (SQLException ex) {
+           System.out.println("Error al dar de alta la materia" + ex.getMessage()
+           );
+       }
+}
     public void borrarMateria(int id) {
         try {
             String sql = "DELETE FROM `materia` WHERE idmateria = ?";

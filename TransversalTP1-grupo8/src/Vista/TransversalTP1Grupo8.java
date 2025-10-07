@@ -38,12 +38,17 @@ public class TransversalTP1Grupo8 {
         MateriaData md = new MateriaData(con);
         
 //agregar materia       
-md.guardarMateria(materia1);
-
+//md.guardarMateria(materia3);
+//Baja Logica
+//md.bajaLogica(3);
+//AltaLogica
+//md.altaLogica(3);
 //elimar materia
-md.borrarMateria(1);
+//md.borrarMateria(1);
         
-        
+        //BUSCAR ALUMNO  
+md.buscarAlumno(2);
+        // al.buscarAlumno(13);
 
 //GUARDAR ALUMNO
 
