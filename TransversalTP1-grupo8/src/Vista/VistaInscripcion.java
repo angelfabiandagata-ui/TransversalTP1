@@ -4,6 +4,14 @@
  */
 package Vista;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.mariadb.jdbc.Connection;
+import java.sql.PreparedStatement;
+import javax.swing.JOptionPane;
+import java.sql.ResultSet;
+
 /**
  *
  * @author Ema
@@ -16,7 +24,10 @@ public class VistaInscripcion extends javax.swing.JFrame {
     public VistaInscripcion() {
         initComponents();
     }
-
+    Connection con = null;
+    ResultSet rs ;
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -33,8 +44,8 @@ public class VistaInscripcion extends javax.swing.JFrame {
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jtesq = new javax.swing.JTable();
+        jcalumno = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -70,7 +81,7 @@ public class VistaInscripcion extends javax.swing.JFrame {
 
         jRadioButton2.setText("Materias no inscriptas");
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        jtesq.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -86,9 +97,14 @@ public class VistaInscripcion extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(jtesq);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "" }));
+        jcalumno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "" }));
+        jcalumno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcalumnoActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Selecione el Alumno:");
 
@@ -116,7 +132,7 @@ public class VistaInscripcion extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addGap(18, 18, 18)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(jcalumno, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(39, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -124,7 +140,7 @@ public class VistaInscripcion extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcalumno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -147,12 +163,33 @@ public class VistaInscripcion extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void jcalumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcalumnoActionPerformed
+//   query devuelve la informacion de un alumno
+//        PreparedStatement ps = null;
+//try {
+//    String sql = "SELECT * FROM alumno WHERE nombre = ?";
+//    ps = con.prepareStatement(sql);
+//
+//    ps.setString(1, (String) jcalumno.getSelectedItem());
+//
+//    rs = ps.executeQuery();
+//
+//    while (rs.next()) {
+//        int id = rs.getInt("id_alumno");
+//        String nombre = rs.getString("nombre");
+//        int edad = rs.getInt("edad"); 
+//        System.out.println("ID: " + id + ", Nombre: " + nombre + ", Edad: " + edad);
+//    }
+//
+//} catch (SQLException ex) {
+//    JOptionPane.showMessageDialog(null, "No se pudo preguntar al servidor sobre ese nombre");
+//}
+    }//GEN-LAST:event_jcalumnoActionPerformed
+
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -184,17 +221,19 @@ public class VistaInscripcion extends javax.swing.JFrame {
             }
         });
     }
-
+    
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JComboBox<String> jcalumno;
+    private javax.swing.JTable jtesq;
     // End of variables declaration//GEN-END:variables
 }
