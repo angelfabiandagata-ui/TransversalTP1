@@ -6,8 +6,13 @@ package Persistencia;
 
 import Modelo.Conexion;
 import Modelo.Inscripcion;
+import java.security.interfaces.RSAKey;
 import java.util.List;
-import org.mariadb.jdbc.Connection;
+import java.sql.ResultSet;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import org.mariadb.jdbc.Statement;
 
 /**
  *
@@ -21,9 +26,25 @@ public class InscripcionData {
         this.con = conexion;
     }
 
-//    public void guardarInscripcion(Inscripcion insc) {
-//
-//    }
+   public void guardarInscripcion(Inscripcion insc) { //Insert
+       String sql = "INSERT INTO `inscripcion`(idAlumno,idMateria, nota) VALUES (?,?,?)";
+       try {
+           PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+           ps.setInt(1, insc.getAlumno().getIdAlumno());
+           ps.setInt(2, insc.getMateria().getIdmateria());
+           ps.setDouble(3, insc.getNota());
+           ps.executeUpdate();
+           ResultSet rs = ps.getGeneratedKeys();
+           if (rs.next()) {
+               insc.setIdInscripcion(rs.getInt(1));
+               System.out.println("Inscripto registrada");
+           }
+           rs.close();
+           ps.close();
+       } catch (SQLException ex) {
+           System.out.println("Ocurrio un error al inscribir" + ex.getMessage());
+       }
+   }
 //
 //    public List<Inscripcion> obtenerInscripciones() {
 //

@@ -38,7 +38,7 @@ public class MateriaData {
         }
     }
 
-    public Materia buscarAlumno(int id) {
+    public Materia buscarMateria(int id) {
         String sql = "SELECT `idMateria`, `nombre`, `anio`, `estado` FROM `materia` WHERE `idMateria` = ?";
         Materia materia = null;
         try {
