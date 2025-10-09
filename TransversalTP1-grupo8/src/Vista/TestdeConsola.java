@@ -40,6 +40,8 @@ public class TestdeConsola extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jDesktopPane1.setBackground(new java.awt.Color(153, 255, 153));
+
         jLabel1.setText("MATERIAS");
 
         jLabel2.setText("INSERTAR:");
@@ -151,7 +153,7 @@ public class TestdeConsola extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jDesktopPane1)
         );
 
         pack();
