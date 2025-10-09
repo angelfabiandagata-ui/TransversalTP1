@@ -40,6 +40,7 @@ public class Menu extends javax.swing.JFrame {
         jMenu_Adm = new javax.swing.JMenu();
         jMenu_Clts = new javax.swing.JMenu();
         Salir = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
 
         jMenu1.setText("jMenu1");
 
@@ -104,6 +105,15 @@ public class Menu extends javax.swing.JFrame {
         jMenuBar1.add(jMenu_Clts);
 
         Salir.setText("Salir");
+
+        jMenuItem3.setText("Salir");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        Salir.add(jMenuItem3);
+
         jMenuBar1.add(Salir);
 
         setJMenuBar(jMenuBar1);
@@ -140,6 +150,10 @@ public class Menu extends javax.swing.JFrame {
                                           
 
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+            System.exit(0);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -186,6 +200,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenu jMenuMateria;
     private javax.swing.JMenu jMenu_Adm;
     private javax.swing.JMenu jMenu_Clts;
