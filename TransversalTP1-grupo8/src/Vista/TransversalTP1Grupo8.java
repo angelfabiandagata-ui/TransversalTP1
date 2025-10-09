@@ -12,6 +12,9 @@ import java.time.Month;
 public class TransversalTP1Grupo8 {
 
     public static void main(String[] args) {
+        
+        Menu pantalla = new Menu();
+        pantalla.setVisible(true);
         Conexion c = new Conexion("jdbc:mariadb://localhost:3306/sgulp_equipo_8", "root", "");
         Connection con = c.buscarConexion();
         AlumnoDatos al = new AlumnoDatos(con);
