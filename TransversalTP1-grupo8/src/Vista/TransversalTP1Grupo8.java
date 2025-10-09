@@ -55,9 +55,9 @@ public class TransversalTP1Grupo8 {
 //md.borrarMateria(1);
         
         //BUSCAR ALUMNO  
-al.buscarAlumno(11);
-        // al.buscarAlumno(13);
-        md.buscarMateria(2);
+//al.buscarAlumno(11);
+//        // al.buscarAlumno(13);
+//        md.buscarMateria(2);
 
 //GUARDAR ALUMNO
 
@@ -91,8 +91,13 @@ al.buscarAlumno(11);
 //        LocalDate.of(2006, Month.MARCH, 31), 
 //        true);
 //alumnoActualizado.setIdAlumno(11);
-//        al.actualizarAlumno(alumnoActualizado);
-ins.guardarInscripcion(insc);
+////        al.actualizarAlumno(alumnoActualizado);
+//ins.guardarInscripcion(insc);
+
+Materia materiaActualizada = new Materia(1,
+        "Web", 2025, true);
+materiaActualizada.setIdmateria(1);
+md.actualizarMateria(materiaActualizada);
 
     }
     

@@ -59,9 +59,23 @@ public class MateriaData {
         }
         return materia;
     }
-    /* public alumno buscarAlumno(int id) {
+    public void actualizarMateria(Materia materia) {
+        try {
+            String sql = "UPDATE `materia` SET `nombre`=?,`anio`=?,`estado`=? WHERE idMateria = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, materia.getNombre());
+            ps.setInt(2, materia.getAnio());
+            ps.setBoolean(3, materia.getEstado());
+            ps.setInt(4, materia.getIdmateria());
+            ps.executeUpdate();
+            ps.close();
+            System.out.println("Materia actualizado correctamente!!");
+        } catch (SQLException ex) {
+            System.out.println("Error al actualizar la materia" + ex.getMessage()
+            );
+        }
+
     }
-     */
     public List<Materia> listarMaterias() {
         String sql = "SELECT * FROM `materias`";
         try {
