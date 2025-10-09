@@ -132,7 +132,6 @@ public class Menu extends javax.swing.JFrame {
     private void AlumnoItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlumnoItemActionPerformed
         VistaAlumno vista = new VistaAlumno(); 
     vista.setVisible(true);                
-    this.dispose(); 
     }//GEN-LAST:event_AlumnoItemActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
