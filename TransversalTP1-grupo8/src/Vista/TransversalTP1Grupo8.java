@@ -2,8 +2,10 @@ package Vista;
 
 import Modelo.Alumno;
 import Modelo.Conexion;
+import Modelo.Inscripcion;
 import Modelo.Materia;
 import Persistencia.AlumnoDatos;
+import Persistencia.InscripcionData;
 import Persistencia.MateriaData;
 import java.sql.Connection;
 import java.time.LocalDate;
@@ -18,6 +20,7 @@ public class TransversalTP1Grupo8 {
         Conexion c = new Conexion("jdbc:mariadb://localhost:3306/sgulp_equipo_8", "root", "");
         Connection con = c.buscarConexion();
         AlumnoDatos al = new AlumnoDatos(con);
+        InscripcionData ins = new InscripcionData(con);
         
         
         //CREACION DE ALUMNOS
@@ -40,6 +43,8 @@ public class TransversalTP1Grupo8 {
         
         MateriaData md = new MateriaData(con);
         
+        Inscripcion insc = new Inscripcion(alumno1, materia2, 10.0);
+        
 //agregar materia       
 //md.guardarMateria(materia3);
 //Baja Logica
@@ -50,12 +55,13 @@ public class TransversalTP1Grupo8 {
 //md.borrarMateria(1);
         
         //BUSCAR ALUMNO  
-md.buscarAlumno(2);
+al.buscarAlumno(11);
         // al.buscarAlumno(13);
+        md.buscarMateria(2);
 
 //GUARDAR ALUMNO
 
-//        al.guardarAlumno(alm);
+    //    al.guardarAlumno(alumno1);
 
 //BORRAR ALUMNO
 
@@ -86,6 +92,8 @@ md.buscarAlumno(2);
 //        true);
 //alumnoActualizado.setIdAlumno(11);
 //        al.actualizarAlumno(alumnoActualizado);
+ins.guardarInscripcion(insc);
+
     }
     
 

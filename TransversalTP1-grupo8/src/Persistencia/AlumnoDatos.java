@@ -1,6 +1,7 @@
 package Persistencia;
 
 import Modelo.Alumno;
+import Modelo.Materia;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,6 +10,7 @@ import java.util.List;
 import javax.naming.spi.DirStateFactory;
 import javax.swing.JOptionPane;
 import javax.swing.SpringLayout;
+import org.mariadb.jdbc.Statement;
 import org.mariadb.jdbc.client.result.Result;
 import org.mariadb.jdbc.client.result.ResultSetMetaData;
 
@@ -24,21 +26,47 @@ public class AlumnoDatos {
     public void guardarAlumno(Alumno a) {
         String sql = "INSERT INTO alumno (dni, apellido, nombre, fechaNacimiento, estado) VALUES (?,?,?,?,?)";
         try {
-            PreparedStatement ps = con.prepareStatement(sql);
+            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, a.getDni());
             ps.setString(2, a.getApellido());
             ps.setString(3, a.getNombre());
             ps.setDate(4, java.sql.Date.valueOf(a.getFechadenacimiento()));
             ps.setBoolean(5, a.getEstado());
-
             ps.executeUpdate();
+           ResultSet rs = ps.getGeneratedKeys();
+           if (rs.next()) {
+               a.setIdAlumno(rs.getInt(1));
+               System.out.println("Inscripto registrada");
+           }
+            
             ps.close();
             System.out.println("Alumno guardado con exito");
         } catch (SQLException ex) {
             System.out.println("Error al guardar alumno: " + ex.getMessage());
         }
     }
+    public Materia buscarAlumno(int id) {
+        String sql = "SELECT `idAlumno`, `dni`, `apellido`, `nombre`, `fechaNacimiento`, `estado` FROM `alumno` WHERE idAlumno = ?";
+        Materia materia = null;
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet resultado = ps.executeQuery();
 
+            while (resultado.next()) {
+                System.out.println("Id: " + resultado.getInt("idAlumno"));
+                System.out.println("Dni: " + resultado.getInt("dni"));
+                System.out.println("Apellido: " + resultado.getString("apellido"));
+                System.out.println("Apellido: " + resultado.getString("nombre"));
+                System.out.println("Estado: " + resultado.getBoolean("estado"));
+                System.out.println("-----------------------------------------------------------");
+            }
+            System.out.println();
+        } catch (SQLException e) {
+            System.out.println("Materia no encontrada");
+        }
+        return materia;
+    }
 
     public List<Alumno> listarAlumnos() {
         String sql = "SELECT * FROM `alumno` WHERE `estado` = true";
