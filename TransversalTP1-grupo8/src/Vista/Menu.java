@@ -39,6 +39,7 @@ public class Menu extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu_Adm = new javax.swing.JMenu();
         jMenu_Clts = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
         Salir = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
 
@@ -102,6 +103,15 @@ public class Menu extends javax.swing.JFrame {
         jMenuBar1.add(jMenu_Adm);
 
         jMenu_Clts.setText("Consultas");
+
+        jMenuItem4.setText("Inscripciones del alumno");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu_Clts.add(jMenuItem4);
+
         jMenuBar1.add(jMenu_Clts);
 
         Salir.setText("Salir");
@@ -155,6 +165,12 @@ public class Menu extends javax.swing.JFrame {
             System.exit(0);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+             VistaListarInscripciones vista = new VistaListarInscripciones(); 
+    vista.setVisible(true); 
+                                
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -201,6 +217,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenu jMenuMateria;
     private javax.swing.JMenu jMenu_Adm;
     private javax.swing.JMenu jMenu_Clts;
