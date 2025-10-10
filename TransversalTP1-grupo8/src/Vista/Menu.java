@@ -32,12 +32,15 @@ public class Menu extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jDesktopPane1 = new javax.swing.JDesktopPane();
         jLabel1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuAlumno = new javax.swing.JMenu();
         AlumnoItem = new javax.swing.JMenuItem();
         jMenuMateria = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu_Adm = new javax.swing.JMenu();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
         jMenu_Clts = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         Salir = new javax.swing.JMenu();
@@ -70,6 +73,8 @@ public class Menu extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jButton1.setText("jButton1");
+
         jMenuAlumno.setText("Alumno");
         jMenuAlumno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -100,6 +105,23 @@ public class Menu extends javax.swing.JFrame {
         jMenuBar1.add(jMenuMateria);
 
         jMenu_Adm.setText("Administracion");
+
+        jMenuItem6.setText("Inscripción");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenu_Adm.add(jMenuItem6);
+
+        jMenuItem5.setText("Cargar Notas");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu_Adm.add(jMenuItem5);
+
         jMenuBar1.add(jMenu_Adm);
 
         jMenu_Clts.setText("Consultas");
@@ -171,6 +193,16 @@ public class Menu extends javax.swing.JFrame {
                                 
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        VistaInscripcion vista = new VistaInscripcion(); 
+    vista.setVisible(true); 
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+                VistaCargaNotas vista = new VistaCargaNotas(); 
+    vista.setVisible(true); 
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -209,6 +241,7 @@ public class Menu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem AlumnoItem;
     private javax.swing.JMenu Salir;
+    private javax.swing.JButton jButton1;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
@@ -218,6 +251,8 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenu jMenuMateria;
     private javax.swing.JMenu jMenu_Adm;
     private javax.swing.JMenu jMenu_Clts;
