@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Persistencia;
 
 import Modelo.Conexion;
@@ -64,15 +60,31 @@ public class InscripcionData {
 //
 //    }
 //
-//    public void borrarinscripcionMateriaAlumno(int idAlumno, int idMateria) {
-//
-//    }
+    public void borrarinscripcionMateriaAlumno(int idAlumno, int idMateria) {
+
+        try {                     
+            String sql = "DELETE FROM inscripcion WHERE idAlumno = ? and idMateria";
+            PreparedStatement ps = con.prepareStatement(sql);
+            
+            ps.setInt(1, idAlumno);
+            ps.setInt(2, idMateria);
+            
+           int filas = ps.executeUpdate();
+           
+           if(filas > 0){JOptionPane.showMessageDialog(null, "Inscripcion Borrada");}
+            
+           ps.close();
+        } catch (SQLException ex) {
+           JOptionPane.showMessageDialog(null, "erorr al hacer conexion // borrar inscripcion");
+        }
+//fin borrMat        
+    }
 //
     public void actualizarNota(int idAlumno, int idMateria, double nota) {
 
    
         try {
-            String sql = "UPDATE `inscripcion` SET nota = ? WHERE idAlumno = ? AND idMateria = ?";
+            String sql = "UPDATE `inscripcion` SET nota = ? WHERE idAlumno = ? and idMateria = ?";
             PreparedStatement ps= con.prepareStatement(sql);
             
             ps.setDouble(1, nota);
@@ -88,7 +100,7 @@ public class InscripcionData {
             }
             ps.close();
         } catch (SQLException ex) {
-           JOptionPane.showMessageDialog(null, "erorr al hacer conexion");
+           JOptionPane.showMessageDialog(null, "erorr al hacer conexion //actualzar nota");
         }
     //fin acNot
     }
