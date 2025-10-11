@@ -12,6 +12,9 @@ import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import org.mariadb.jdbc.Statement;
 
 /**
@@ -26,8 +29,8 @@ public class InscripcionData {
         this.con = conexion;
     }
 
-   public void guardarInscripcion(Inscripcion insc) { //Insert
-       String sql = "INSERT INTO `inscripcion`(idAlumno,idMateria, nota) VALUES (?,?,?)";
+   public void guardarInscripcion(Inscripcion insc) { 
+       String sql = "INSERT INTO inscripcion(idAlumno,idMateria, nota) VALUES (?,?,?)";
        try {
            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
            ps.setInt(1, insc.getAlumno().getIdAlumno());
@@ -65,9 +68,32 @@ public class InscripcionData {
 //
 //    }
 //
-//    public void actualizarNota(int idAlumno, int idMateria, double nota) {
-//
-//    }
+    public void actualizarNota(int idAlumno, int idMateria, double nota) {
+
+   
+        try {
+            String sql = "UPDATE `inscripcion` SET nota = ? WHERE idAlumno = ? AND idMateria = ?";
+            PreparedStatement ps= con.prepareStatement(sql);
+            
+            ps.setDouble(1, nota);
+            ps.setInt(2, idAlumno);
+            ps.setInt(3, idMateria);
+            
+            int resultado = ps.executeUpdate();
+            
+            if(resultado > 0){
+                JOptionPane.showMessageDialog(null, "Nota actualizada");
+            }else{
+             JOptionPane.showMessageDialog(null, "No se actualizo ninguna nota");
+            }
+            ps.close();
+        } catch (SQLException ex) {
+           JOptionPane.showMessageDialog(null, "erorr al hacer conexion");
+        }
+    //fin acNot
+    }
+//    
+   
 //    public List<Alumno> obtenerAlumnosXMateria(int idMateria) {
 //
 //    }

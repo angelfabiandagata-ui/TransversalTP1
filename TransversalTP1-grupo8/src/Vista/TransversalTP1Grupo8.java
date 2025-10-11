@@ -28,7 +28,7 @@ public class TransversalTP1Grupo8 {
         
         Alumno alumno2 = new Alumno(36881187, "D'Agata", "Fabian", LocalDate.of(1991, Month.NOVEMBER, 29), true);
         
-        Alumno alumno3 = new Alumno(45886408, "Amaya", "Leandro", LocalDate.of(2004, Month.SEPTEMBER, 21), true);
+        Alumno alumno3 = new Alumno(45886408, "Amaya", "Leandro", LocalDate.of(2004, Month.SEPTEMBER, 23), true);
         
         Alumno alumno4 = new Alumno(37296838, "Sosa", "Daiana", LocalDate.of(1993, Month.MAY, 31), true);
         
@@ -61,11 +61,11 @@ public class TransversalTP1Grupo8 {
 
 //GUARDAR ALUMNO
 
-    //    al.guardarAlumno(alumno1);
+//        al.guardarAlumno(alumno1);
 
 //BORRAR ALUMNO
 
-        //al.borrarAlumno();
+//        al.borrarAlumno();
         
 //LISTAR ALUMNOS
 
@@ -94,10 +94,14 @@ public class TransversalTP1Grupo8 {
 ////        al.actualizarAlumno(alumnoActualizado);
 //ins.guardarInscripcion(insc);
 
-Materia materiaActualizada = new Materia(1,
-        "Web", 2025, true);
-materiaActualizada.setIdmateria(1);
-md.actualizarMateria(materiaActualizada);
+//Materia materiaActualizada = new Materia(1,
+//        "Web", 2025, true);
+//materiaActualizada.setIdmateria(1);
+//md.actualizarMateria(materiaActualizada);
+
+////actualizar nota
+//Inscripcion inslucas = new Inscripcion(alumno1,materia1,1);
+//ins.guardarInscripcion(inslucas);
 
     }
     
