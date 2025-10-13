@@ -20,6 +20,10 @@ public class MateriaData {
         this.con = conexion;
     }
 
+    public MateriaData() {
+    }
+    
+    
     public void guardarMateria(Materia a) {
         String sql = "INSERT INTO materia(idMateria, nombre, anio, estado) VALUES (?,?,?,?)";
         try {

@@ -23,6 +23,10 @@ public class AlumnoDatos {
         this.con = conexion;
     }
 
+    public AlumnoDatos() {
+    }
+    
+
     public void guardarAlumno(Alumno a) {
         String sql = "INSERT INTO alumno (dni, apellido, nombre, fechaNacimiento, estado) VALUES (?,?,?,?,?)";
         try {
@@ -45,9 +49,9 @@ public class AlumnoDatos {
             System.out.println("Error al guardar alumno: " + ex.getMessage());
         }
     }
-    public Materia buscarAlumno(int id) {
+    public Alumno buscarAlumno(int id) {
         String sql = "SELECT `idAlumno`, `dni`, `apellido`, `nombre`, `fechaNacimiento`, `estado` FROM `alumno` WHERE idAlumno = ?";
-        Materia materia = null;
+        Alumno alumno = null;
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
@@ -65,7 +69,7 @@ public class AlumnoDatos {
         } catch (SQLException e) {
             System.out.println("Materia no encontrada");
         }
-        return materia;
+        return alumno;
     }
 
     public List<Alumno> listarAlumnos() {

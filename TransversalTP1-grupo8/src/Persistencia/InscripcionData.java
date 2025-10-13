@@ -1,13 +1,16 @@
 package Persistencia;
 
+import Modelo.Alumno;
 import Modelo.Conexion;
 import Modelo.Inscripcion;
+import Modelo.Materia;
 import java.security.interfaces.RSAKey;
 import java.util.List;
 import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -20,7 +23,9 @@ import org.mariadb.jdbc.Statement;
 public class InscripcionData {
 
     private Connection con = null;
-
+    private MateriaData md= new MateriaData();
+    private AlumnoDatos ad= new AlumnoDatos();
+    
     public InscripcionData(Connection conexion) {
         this.con = conexion;
     }
@@ -45,9 +50,31 @@ public class InscripcionData {
        }
    }
 //
-//    public List<Inscripcion> obtenerInscripciones() {
-//
-//    }
+    public List<Inscripcion> obtenerInscripciones() {
+    
+        ArrayList<Inscripcion> cursadas = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM inscripcion";
+            PreparedStatement ps = con.prepareStatement(sql);
+        
+            ResultSet rs = ps.executeQuery();
+        
+            while(rs.next()){
+            Inscripcion insc = new Inscripcion();
+            insc.setIdInscripcion(rs.getInt("idInscripto"));
+            Materia mat = md.buscarMateria(rs.getInt("idMateria"));
+            Alumno alu = ad.buscarAlumno(rs.getInt("idAlumno"));
+            insc.setAlumno(alu);
+            insc.setMateria(mat);
+            insc.setNota(rs.getDouble("nota"));
+            cursadas.add(insc);
+            }
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "No se pudo conectar // obtener Inscripciones");
+        }
+        return cursadas;
+    }
 //
 //    public List<Inscripcion> obtenerinscripcionesPorAlumno(int id) {
 //

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 public class Alumno {
 
+    //atributos
     private int idAlumno;//int
     private int dni;//int
     private String apellido;//varchar
@@ -11,6 +12,7 @@ public class Alumno {
     private LocalDate fechadenacimiento;//date
     private boolean estado;//tinyint
 
+    //constructor lleno
     public Alumno(int dni, String apellido, String nombre, LocalDate fechadenacimiento, boolean estado) {
         this.dni = dni;
         this.apellido = apellido;
@@ -18,6 +20,10 @@ public class Alumno {
         this.fechadenacimiento = fechadenacimiento;
         this.estado = estado;
     }
+
+    //constructor vacio
+    public Alumno() {
+       }
 
     public int getIdAlumno() {
         return idAlumno;
