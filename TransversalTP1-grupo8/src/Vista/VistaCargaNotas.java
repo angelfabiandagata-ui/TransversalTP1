@@ -225,17 +225,17 @@ public class VistaCargaNotas extends javax.swing.JFrame {
                                                                                              
     
         try {
-        // Conexión a la base de datos
+       
         Conexion c = new Conexion("jdbc:mariadb://localhost:3306/sgulp_equipo_8", "root", "");
         Connection con = (Connection) c.buscarConexion();
         InscripcionData insData = new InscripcionData(con);
         MateriaData matData = new MateriaData(con);
        
 
-        // Obtener el modelo de la tabla
+        
         DefaultTableModel model = (DefaultTableModel) tablaNotas.getModel();
 
-        // Recorrer todas las filas de la tabla
+        
         for (int i = 0; i < model.getRowCount(); i++) {
             // Obtener los valores de cada columna
             int idAlumno = Integer.parseInt(model.getValueAt(i, 0).toString());
@@ -248,7 +248,7 @@ public class VistaCargaNotas extends javax.swing.JFrame {
                 promocion = (boolean) model.getValueAt(i, 4);
             }
 
-            // Buscar el ID de la materia según su nombre
+            
             Materia materia = matData.buscarMateriaPorNombre(nombreMateria);
             if (materia == null) {
                 JOptionPane.showMessageDialog(this, 
@@ -258,10 +258,10 @@ public class VistaCargaNotas extends javax.swing.JFrame {
 
             int idMateria = materia.getIdmateria();
 
-            // Actualizar las notas en la base de datos
+            
             insData.actualizarNota(idAlumno, idMateria, nota2);
 
-            // (Opcional) actualizar promoción si lo necesitás
+            
             if (promocion) {
                 // insData.actualizarPromocion(idAlumno, idMateria, true);
             }
