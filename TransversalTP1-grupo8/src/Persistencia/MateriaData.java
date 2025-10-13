@@ -63,6 +63,33 @@ public class MateriaData {
         }
         return materia;
     }
+    
+    public Materia buscarMateriaPorNombre(String nombre) {
+    Materia materia = null;
+    String sql = "SELECT idMateria, nombre, anio, estado FROM materia WHERE nombre = ?";
+
+    try {
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, nombre);
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            materia = new Materia();
+            materia.setIdmateria(rs.getInt("idMateria"));
+            materia.setNombre(rs.getString("nombre"));
+            materia.setAnio(rs.getInt("anio"));
+            materia.setEstado(rs.getBoolean("estado"));
+        }
+
+        ps.close();
+    } catch (SQLException ex) {
+        System.out.println("Error al buscar la materia por nombre: " + ex.getMessage());
+    }
+
+    return materia;
+}
+    
+    
     public void actualizarMateria(Materia materia) {
         try {
             String sql = "UPDATE `materia` SET `nombre`=?,`anio`=?,`estado`=? WHERE idMateria = ?";

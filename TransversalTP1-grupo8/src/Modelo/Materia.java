@@ -23,7 +23,9 @@ public class Materia {
         this.anio = anio;
         this.estado = estado;
     }
-   
+    
+   public Materia() {
+}
    
     //getters y setters
     public int getIdmateria() {

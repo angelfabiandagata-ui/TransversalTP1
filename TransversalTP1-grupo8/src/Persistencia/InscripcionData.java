@@ -76,12 +76,73 @@ public class InscripcionData {
         return cursadas;
     }
 //
-//    public List<Inscripcion> obtenerinscripcionesPorAlumno(int id) {
-//
-//    }
-//    public List<Materia> obtenerMateriasCursadas(int id) {
-//
-//    }
+  public List<Inscripcion> obtenerinscripcionesPorAlumno(int id) {
+ 
+    List<Inscripcion> inscripciones = new ArrayList<>();
+    String sql = "SELECT * FROM inscripcion WHERE idAlumno = ?";
+
+    try {
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, id);
+        ResultSet rs = ps.executeQuery();
+
+        AlumnoDatos aluData = new AlumnoDatos(con);
+        MateriaData matData = new MateriaData(con);
+
+        while (rs.next()) {
+            Inscripcion ins = new Inscripcion();
+            ins.setIdInscripcion(rs.getInt("idInscripcion"));
+            ins.setNota(rs.getDouble("nota"));
+
+            // Traemos el alumno y la materia asociados
+            Alumno a = aluData.buscarAlumno(rs.getInt("idAlumno"));
+            Materia m = matData.buscarMateria(rs.getInt("idMateria"));
+
+            ins.setAlumno(a);
+            ins.setMateria(m);
+
+            inscripciones.add(ins);
+        }
+
+        ps.close();
+
+    } catch (SQLException ex) {
+        System.out.println("❌ Error al obtener inscripciones: " + ex.getMessage());
+    }
+
+    return inscripciones;
+}
+      
+
+    public List<Materia> obtenerMateriasCursadas(int idAlumno) {
+        
+        List<Materia> materias = new ArrayList<>();
+         String sql = "SELECT m.* FROM materia m "
+               + "JOIN inscripcion i ON m.idMateria = i.idMateria "
+               + "WHERE i.idAlumno = ? AND i.nota >= 7";
+         
+         try {
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, idAlumno);
+        ResultSet rs = ps.executeQuery();
+     while (rs.next()) {
+            Materia m = new Materia();
+            m.setIdmateria(rs.getInt("idMateria"));
+            m.setNombre(rs.getString("nombre"));
+            m.setAnio(rs.getInt("anio"));
+            m.setEstado(rs.getBoolean("estado"));
+            materias.add(m);
+        }
+
+        ps.close();
+
+    } catch (SQLException ex) {
+        System.out.println("❌ Error al obtener materias cursadas: " + ex.getMessage());
+    }
+
+    return materias;
+}
+    
 //
 //    public List<Materia> obtenerMateriasNOCursadas(int id) {
 //
