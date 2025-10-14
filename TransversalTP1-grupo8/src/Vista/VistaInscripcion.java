@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package Vista;
 
 import java.sql.SQLException;
@@ -19,29 +16,18 @@ import Persistencia.MateriaData;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import Modelo.Conexion;
 
-/**
- *
- * @author Ema
- */
+
 public class VistaInscripcion extends javax.swing.JFrame {
 
-    /**
-     * Creates new form VistaInscripcion
-     */
-    public VistaInscripcion() {
-        initComponents();
-        
-        aData = new AlumnoDatos();
-        ListaA = (ArrayList<Alumno>)aData.listarAlumnos();
-        modelo = new DefaultTableModel();
-        inscData = new InscripcionData();
-        
-        cargaAlumnos();
-        armarCaberaTabla();
-    }
+    //base de datos
+    String url = "jdbc:mariadb://localhost:3306/tu_base";
+    String usuario = "root";
+    String password = "1234"; // cambia según tu contraseña
+
+// Crear la conexión
     Connection con = null;
-    ResultSet rs ;
     
     private ArrayList<Materia> ListaM;
     private ArrayList<Alumno>  ListaA;
@@ -51,6 +37,25 @@ public class VistaInscripcion extends javax.swing.JFrame {
     private AlumnoDatos aData;
             
     private DefaultTableModel modelo;
+    ResultSet rs ;
+
+    public VistaInscripcion() {
+        initComponents();
+        
+  
+    Conexion c = new Conexion(url, usuario, password);
+    Connection con = (Connection) c.buscarConexion(); 
+
+        aData = new AlumnoDatos(con);
+        inscData = new InscripcionData(con);
+
+        ListaA = (ArrayList<Alumno>)aData.listarAlumnos();
+        
+        modelo = new DefaultTableModel();
+        
+        cargaAlumnos();
+        armarCabeceraTabla();
+    }
     
 //    public formularioInscripcion(){
 //    
@@ -62,7 +67,7 @@ public class VistaInscripcion extends javax.swing.JFrame {
         
         }
 
-    private void armarCaberaTabla() {
+    private void armarCabeceraTabla() {
        ArrayList<Object> filaCabecera = new ArrayList<>();
        filaCabecera.add("ID");
        filaCabecera.add("Nombre");
@@ -94,16 +99,24 @@ public class VistaInscripcion extends javax.swing.JFrame {
     
     }
 
-    private void cargaDatosInscriptas(){
-    
-    Alumno selec = (Alumno) jcalu.getSelectedItem();
-    ArrayList <Materia> lista = (ArrayList) inscData.obtenerMateriasCursadas(selec.getIdAlumno());
-    
+    private void cargarDatosInscriptas() {
+    borrarFilaTabla();
+
+    Alumno alumnoSeleccionado = (Alumno) jcalu.getSelectedItem();
+
+    if (alumnoSeleccionado != null) {
+        ArrayList<Materia> lista = (ArrayList<Materia>) inscData.obtenerMateriasCursadas(alumnoSeleccionado.getIdAlumno());
+
         for (Materia m : lista) {
-            modelo.addRow(new Object[] {m.getIdmateria(), m.getNombre(), m.getAnio()});
+            modelo.addRow(new Object[]{
+                m.getIdmateria(),
+                m.getNombre(),
+                m.getAnio()
+            });
         }
-            
     }
+}
+
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -188,8 +201,6 @@ public class VistaInscripcion extends javax.swing.JFrame {
             }
         });
 
-        jcalu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -251,7 +262,7 @@ public class VistaInscripcion extends javax.swing.JFrame {
 
         borrarFilaTabla();
         radionoinscriptas.setSelected(false);
-        cargaDatosInscriptas();
+        cargarDatosInscriptas();
         jbinscribir.setEnabled(false);
         jbanular.setEnabled(true);
         
