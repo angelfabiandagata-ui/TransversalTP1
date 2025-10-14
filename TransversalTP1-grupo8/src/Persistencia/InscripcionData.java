@@ -137,17 +137,42 @@ public class InscripcionData {
         ps.close();
 
     } catch (SQLException ex) {
-        System.out.println("❌ Error al obtener materias cursadas: " + ex.getMessage());
+        System.out.println("Error al obtener materias cursadas: " + ex.getMessage());
     }
 
     return materias;
 }
     
 //
-//    public List<Materia> obtenerMateriasNOCursadas(int id) {
-//
-//    }
-//
+public List<Materia> obtenerMateriasNOCursadas(int idAlumno) {
+    List<Materia> materias = new ArrayList<>();
+    String sql = "SELECT * FROM materia WHERE idMateria NOT IN "
+               + "(SELECT idMateria FROM inscripcion WHERE idAlumno = ?)";
+
+    try {
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, idAlumno);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            Materia m = new Materia();
+            m.setIdmateria(rs.getInt("idMateria"));
+            m.setNombre(rs.getString("nombre"));
+            m.setAnio(rs.getInt("anio"));
+            m.setEstado(rs.getBoolean("estado"));
+            materias.add(m);
+        }
+
+        ps.close();
+
+    } catch (SQLException ex) {
+        System.out.println(" Error al obtener materias no cursadas: " + ex.getMessage());
+    }
+
+    return materias;
+}
+
+
     public void borrarinscripcionMateriaAlumno(int idAlumno, int idMateria) {
 
         try {                     
@@ -194,8 +219,38 @@ public class InscripcionData {
     }
 //    
    
-//    public List<Alumno> obtenerAlumnosXMateria(int idMateria) {
-//
-//    }
-
+    public List<Alumno> obtenerAlumnosXMateria(int idMateria) {
+  List<Alumno> alumnos = new ArrayList<>();
+    
+    String sql = "SELECT alumno.idAlumno, dni, nombre, apellido, fechaNacimiento, estado "
+               + "FROM inscripcion "
+               + "JOIN alumno ON (inscripcion.idAlumno = alumno.idAlumno) "
+               + "WHERE inscripcion.idMateria = ? AND alumno.estado = 1";
+    
+    try {
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, idMateria);
+        ResultSet rs = ps.executeQuery();
+        
+        while (rs.next()) {
+            Alumno alumno = new Alumno();
+            alumno.setIdAlumno(rs.getInt("idAlumno"));
+            alumno.setDni(rs.getInt("dni"));
+            alumno.setNombre(rs.getString("nombre"));
+            alumno.setApellido(rs.getString("apellido"));
+            alumno.setFechadenacimiento(rs.getDate("fechadenacimiento").toLocalDate());
+            alumno.setEstado(rs.getBoolean("estado"));
+            alumnos.add(alumno);
+        }
+        
+        ps.close();
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Error al acceder a la tabla inscripción: " + ex.getMessage());
+    }
+    
+    return alumnos;
 }
+   
+}
+
+
