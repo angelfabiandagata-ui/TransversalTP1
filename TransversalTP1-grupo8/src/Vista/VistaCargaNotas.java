@@ -261,7 +261,7 @@ public class VistaCargaNotas extends javax.swing.JFrame {
             
             insData.actualizarNota(idAlumno, idMateria, nota2);
 
-            
+                                                      
             if (promocion) {
                 // insData.actualizarPromocion(idAlumno, idMateria, true);
             }
