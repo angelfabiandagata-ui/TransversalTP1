@@ -116,10 +116,10 @@ public class VistaInscripcion extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        jbinscribir = new javax.swing.JButton();
+        jbanular = new javax.swing.JButton();
+        radioinscriptas = new javax.swing.JRadioButton();
+        radionoinscriptas = new javax.swing.JRadioButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jtesq = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
@@ -141,25 +141,25 @@ public class VistaInscripcion extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Inscribir");
-        jButton1.setEnabled(false);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jbinscribir.setText("Inscribir");
+        jbinscribir.setEnabled(false);
+        jbinscribir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jbinscribirActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Anular Inscripcion");
-        jButton2.setEnabled(false);
+        jbanular.setText("Anular Inscripcion");
+        jbanular.setEnabled(false);
 
-        jRadioButton1.setText("Materias Inscriptas");
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+        radioinscriptas.setText("Materias Inscriptas");
+        radioinscriptas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
+                radioinscriptasActionPerformed(evt);
             }
         });
 
-        jRadioButton2.setText("Materias no inscriptas");
+        radionoinscriptas.setText("Materias no inscriptas");
 
         jtesq.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -200,9 +200,9 @@ public class VistaInscripcion extends javax.swing.JFrame {
                         .addGap(74, 74, 74)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jRadioButton1)
+                                .addComponent(radioinscriptas)
                                 .addGap(52, 52, 52)
-                                .addComponent(jRadioButton2))
+                                .addComponent(radionoinscriptas))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addGap(29, 29, 29)
@@ -211,9 +211,9 @@ public class VistaInscripcion extends javax.swing.JFrame {
                         .addGap(33, 33, 33)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jbanular, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(36, 36, 36)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jbinscribir, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -228,14 +228,14 @@ public class VistaInscripcion extends javax.swing.JFrame {
                     .addComponent(jcalu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2))
+                    .addComponent(radioinscriptas)
+                    .addComponent(radionoinscriptas))
                 .addGap(24, 24, 24)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbanular, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbinscribir, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(19, 19, 19))
         );
@@ -243,13 +243,19 @@ public class VistaInscripcion extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jbinscribirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbinscribirActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jbinscribirActionPerformed
 
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+    private void radioinscriptasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioinscriptasActionPerformed
+
+        borrarFilaTabla();
+        radionoinscriptas.setSelected(false);
+        cargaDatosInscriptas();
+        jbinscribir.setEnabled(false);
+        jbanular.setEnabled(true);
         
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
+    }//GEN-LAST:event_radioinscriptasActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
        this.dispose();
@@ -291,16 +297,16 @@ public class VistaInscripcion extends javax.swing.JFrame {
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JButton jbanular;
+    private javax.swing.JButton jbinscribir;
     private javax.swing.JComboBox<Alumno> jcalu;
     private javax.swing.JTable jtesq;
+    private javax.swing.JRadioButton radioinscriptas;
+    private javax.swing.JRadioButton radionoinscriptas;
     // End of variables declaration//GEN-END:variables
 }

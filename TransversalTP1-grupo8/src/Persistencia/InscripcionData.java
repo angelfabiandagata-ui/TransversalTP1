@@ -30,6 +30,10 @@ public class InscripcionData {
         this.con = conexion;
     }
 
+    public InscripcionData() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
    public void guardarInscripcion(Inscripcion insc) { 
        String sql = "INSERT INTO inscripcion(idAlumno,idMateria, nota) VALUES (?,?,?)";
        try {
