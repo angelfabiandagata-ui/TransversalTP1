@@ -58,7 +58,7 @@ public class VistaAlumno extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
-        fecha = new com.toedter.calendar.JDateChooser();
+        jdcFechaNac = new com.toedter.calendar.JDateChooser();
         checkEstado = new javax.swing.JCheckBox();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -212,7 +212,7 @@ public class VistaAlumno extends javax.swing.JFrame {
         jDesktopPane1.setLayer(jButton4, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jButton5, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jButton6, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(fecha, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jdcFechaNac, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(checkEstado, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
@@ -268,7 +268,7 @@ public class VistaAlumno extends javax.swing.JFrame {
                                                     .addComponent(jLabel12)
                                                     .addGap(18, 18, 18)))
                                             .addGap(4, 4, 4)
-                                            .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                            .addComponent(jdcFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                             .addGroup(jDesktopPane1Layout.createSequentialGroup()
                                 .addGap(146, 146, 146)
                                 .addComponent(jButton1)))
@@ -326,7 +326,7 @@ public class VistaAlumno extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel12)
-                            .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jdcFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel13)
@@ -413,7 +413,7 @@ public class VistaAlumno extends javax.swing.JFrame {
            int dni = Integer.parseInt(dniTxt.getText());
         String apellido = apellidoTxt.getText();
         String nombre = nombreTxt.getText();
-        java.util.Date fechaUtil = fecha.getDate(); 
+        java.util.Date fechaUtil = jdcFechaNac.getDate(); 
         LocalDate fechaNac = fechaUtil.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         boolean estado = checkEstado.isSelected(); 
         
@@ -477,7 +477,6 @@ public class VistaAlumno extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JCheckBox checkEstado;
     private javax.swing.JTextField dniTxt;
-    private com.toedter.calendar.JDateChooser fecha;
     private javax.swing.JTextField idTxt;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -503,6 +502,7 @@ public class VistaAlumno extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
+    private com.toedter.calendar.JDateChooser jdcFechaNac;
     private javax.swing.JTextField nombreTxt;
     // End of variables declaration//GEN-END:variables
 }
