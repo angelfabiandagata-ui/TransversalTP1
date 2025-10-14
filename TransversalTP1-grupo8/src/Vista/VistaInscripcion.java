@@ -11,6 +11,14 @@ import org.mariadb.jdbc.Connection;
 import java.sql.PreparedStatement;
 import javax.swing.JOptionPane;
 import java.sql.ResultSet;
+import Modelo.Alumno;
+import Modelo.Materia;
+import Persistencia.AlumnoDatos;
+import Persistencia.InscripcionData;
+import Persistencia.MateriaData;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -23,10 +31,79 @@ public class VistaInscripcion extends javax.swing.JFrame {
      */
     public VistaInscripcion() {
         initComponents();
+        
+        aData = new AlumnoDatos();
+        ListaA = (ArrayList<Alumno>)aData.listarAlumnos();
+        modelo = new DefaultTableModel();
+        inscData = new InscripcionData();
+        
+        cargaAlumnos();
+        armarCaberaTabla();
     }
     Connection con = null;
     ResultSet rs ;
     
+    private ArrayList<Materia> ListaM;
+    private ArrayList<Alumno>  ListaA;
+    
+    private InscripcionData inscData;
+    private MateriaData mData;
+    private AlumnoDatos aData;
+            
+    private DefaultTableModel modelo;
+    
+//    public formularioInscripcion(){
+//    
+//    }
+        private void cargaAlumnos() {
+            for (Alumno items : ListaA) {
+           jcalu.addItem(items);
+            }
+        
+        }
+
+    private void armarCaberaTabla() {
+       ArrayList<Object> filaCabecera = new ArrayList<>();
+       filaCabecera.add("ID");
+       filaCabecera.add("Nombre");
+       filaCabecera.add("Año");
+       
+        for (Object it : filaCabecera) {
+            modelo.addColumn(it);
+        }
+       jTable1.setModel(modelo);
+    }
+    
+    private void borrarFilaTabla(){
+    int indice = modelo.getRowCount()-1;
+    
+        for (int i = indice; i >= 0; i--) {
+            modelo.removeRow(i);
+        }
+        
+    }
+    
+    private void cargarDatosNoInscriptas(){
+    
+    Alumno select = (Alumno) jcalu.getSelectedItem();
+//    ListaM = (ArrayList) inscData.obtenerMateriasNOCursadas(select.getIdAlumno());
+    
+        for (Materia m : ListaM) {
+            modelo.addRow(new Object[] {m.getIdmateria(),m.getNombre(),m.getAnio() });
+        }
+    
+    }
+
+    private void cargaDatosInscriptas(){
+    
+    Alumno selec = (Alumno) jcalu.getSelectedItem();
+    ArrayList <Materia> lista = (ArrayList) inscData.obtenerMateriasCursadas(selec.getIdAlumno());
+    
+        for (Materia m : lista) {
+            modelo.addRow(new Object[] {m.getIdmateria(), m.getNombre(), m.getAnio()});
+        }
+            
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -45,9 +122,9 @@ public class VistaInscripcion extends javax.swing.JFrame {
         jRadioButton2 = new javax.swing.JRadioButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jtesq = new javax.swing.JTable();
-        jcalumno = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
+        jcalu = new javax.swing.JComboBox<>();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -65,6 +142,7 @@ public class VistaInscripcion extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jButton1.setText("Inscribir");
+        jButton1.setEnabled(false);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -72,6 +150,7 @@ public class VistaInscripcion extends javax.swing.JFrame {
         });
 
         jButton2.setText("Anular Inscripcion");
+        jButton2.setEnabled(false);
 
         jRadioButton1.setText("Materias Inscriptas");
         jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -100,13 +179,6 @@ public class VistaInscripcion extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jtesq);
 
-        jcalumno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "" }));
-        jcalumno.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcalumnoActionPerformed(evt);
-            }
-        });
-
         jLabel1.setText("Selecione el Alumno:");
 
         jButton3.setText("Salir");
@@ -116,15 +188,14 @@ public class VistaInscripcion extends javax.swing.JFrame {
             }
         });
 
+        jcalu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(74, 74, 74)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -134,41 +205,39 @@ public class VistaInscripcion extends javax.swing.JFrame {
                                 .addComponent(jRadioButton2))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
-                                .addGap(18, 18, 18)
-                                .addComponent(jcalumno, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGap(29, 29, 29)
+                                .addComponent(jcalu, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(36, 36, 36)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(43, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(58, 58, 58)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton3)
-                .addGap(15, 15, 15))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jcalumno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addGap(42, 42, 42)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jcalu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jRadioButton1)
                     .addComponent(jRadioButton2))
                 .addGap(24, 24, 24)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(20, 20, 20))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton3)
-                        .addGap(19, 19, 19))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19))
         );
 
         pack();
@@ -181,29 +250,6 @@ public class VistaInscripcion extends javax.swing.JFrame {
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
         
     }//GEN-LAST:event_jRadioButton1ActionPerformed
-
-    private void jcalumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcalumnoActionPerformed
-//   query devuelve la informacion de un alumno
-//        PreparedStatement ps = null;
-//try {
-//    String sql = "SELECT * FROM alumno WHERE nombre = ?";
-//    ps = con.prepareStatement(sql);
-//
-//    ps.setString(1, (String) jcalumno.getSelectedItem());
-//
-//    rs = ps.executeQuery();
-//
-//    while (rs.next()) {
-//        int id = rs.getInt("id_alumno");
-//        String nombre = rs.getString("nombre");
-//        int edad = rs.getInt("edad"); 
-//        System.out.println("ID: " + id + ", Nombre: " + nombre + ", Edad: " + edad);
-//    }
-//
-//} catch (SQLException ex) {
-//    JOptionPane.showMessageDialog(null, "No se pudo preguntar al servidor sobre ese nombre");
-//}
-    }//GEN-LAST:event_jcalumnoActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
        this.dispose();
@@ -254,7 +300,7 @@ public class VistaInscripcion extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JComboBox<String> jcalumno;
+    private javax.swing.JComboBox<Alumno> jcalu;
     private javax.swing.JTable jtesq;
     // End of variables declaration//GEN-END:variables
 }
