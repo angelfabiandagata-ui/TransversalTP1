@@ -1,6 +1,7 @@
 package Persistencia;
 
 import Modelo.Alumno;
+import Modelo.Conexion;
 import Modelo.Materia;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,6 +25,18 @@ public class AlumnoDatos {
     }
 
     public AlumnoDatos() {
+        String url = "localhost/phpmyadmin/index.php?route=database/structure&db=sgulp_equipo_8";
+        String usuario ="root";
+        String password= "1234";
+        
+        try {
+                Conexion conAux = new Conexion(url, usuario, password);
+                this.con = conAux.buscarConexion();
+        } catch (Exception e) {
+            System.err.print("Error");
+        }
+        
+        
     }
     
 

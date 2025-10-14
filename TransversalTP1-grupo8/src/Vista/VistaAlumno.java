@@ -409,12 +409,18 @@ public class VistaAlumno extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       try {
+        LocalDate fechaNac = null;
+        try {
            int dni = Integer.parseInt(dniTxt.getText());
         String apellido = apellidoTxt.getText();
         String nombre = nombreTxt.getText();
         java.util.Date fechaUtil = jdcFechaNac.getDate(); 
-        LocalDate fechaNac = fechaUtil.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+          if (fechaUtil == null) {
+            throw new IllegalArgumentException("Debe seleccionar la fecha de nacimiento."); 
+        }
+          fechaNac = fechaUtil.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(); 
+        
+        
         boolean estado = checkEstado.isSelected(); 
         
          Alumno nuevoAlumno = new Alumno(dni, apellido, nombre, fechaNac, estado);
@@ -423,9 +429,11 @@ public class VistaAlumno extends javax.swing.JFrame {
         
        
          } catch (NumberFormatException ex) {
-        JOptionPane.showMessageDialog(this, "Asegúrese de que el DNI sea un número válido.", "Error de Datos", JOptionPane.WARNING_MESSAGE);
-    } catch (NullPointerException ex) {
-         JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos, incluida la fecha.", "Error de Datos", JOptionPane.WARNING_MESSAGE);
+        // Maneja error de formato de números
+        JOptionPane.showMessageDialog(this, "Asegúrese de que el DNI sea un número válido y todos los campos estén completos.", "Error de Datos", JOptionPane.WARNING_MESSAGE);
+    } catch (IllegalArgumentException ex) {
+        // Captura tu propia excepción si la fecha es null
+        JOptionPane.showMessageDialog(this, ex.getMessage(), "Campo Requerido", JOptionPane.WARNING_MESSAGE);
     } 
 
 
