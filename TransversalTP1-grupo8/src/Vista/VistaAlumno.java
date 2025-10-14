@@ -16,7 +16,6 @@ public class VistaAlumno extends javax.swing.JFrame {
     public VistaAlumno() {
         initComponents();
         alumnoData = new AlumnoDatos();
-//Connection con = Conexion.getConexion();
     }
 
     /**
@@ -429,19 +428,14 @@ public class VistaAlumno extends javax.swing.JFrame {
         
        
          } catch (NumberFormatException ex) {
-        // Maneja error de formato de números
         JOptionPane.showMessageDialog(this, "Asegúrese de que el DNI sea un número válido y todos los campos estén completos.", "Error de Datos", JOptionPane.WARNING_MESSAGE);
     } catch (IllegalArgumentException ex) {
-        // Captura tu propia excepción si la fecha es null
         JOptionPane.showMessageDialog(this, ex.getMessage(), "Campo Requerido", JOptionPane.WARNING_MESSAGE);
     } 
 
 
         
         
-        
-//        AlumnoDatos a = new AlumnoDatos();
-//        a.guardarAlumno(a);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
