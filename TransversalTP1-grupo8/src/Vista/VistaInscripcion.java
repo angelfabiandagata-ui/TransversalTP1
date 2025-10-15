@@ -56,8 +56,20 @@ public class VistaInscripcion extends javax.swing.JFrame {
         cargaAlumnos();
         armarCabeceraTabla();
     }
-    
-//    public formularioInscripcion(){
+    //formularioInscripcion(){
+  public void VistaInscripcion(){
+      initComponents();
+      
+      aData = new AlumnoDatos();
+      ListaA = (ArrayList<Alumno>) aData.listarAlumnos();
+      modelo = new DefaultTableModel();
+      inscData = new InscripcionData();
+      mData = new MateriaData();
+      
+      cargaAlumnos();
+      armarCabeceraTabla();
+      
+  }
 //    
 //    }
         private void cargaAlumnos() {
@@ -255,7 +267,7 @@ public class VistaInscripcion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbinscribirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbinscribirActionPerformed
-        // TODO add your handling code here:
+       int filaseleccionada= jMateria
     }//GEN-LAST:event_jbinscribirActionPerformed
 
     private void radioinscriptasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioinscriptasActionPerformed
