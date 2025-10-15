@@ -278,7 +278,7 @@ public class VistaInscripcion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbinscribirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbinscribirActionPerformed
-       int filaseleccionada= jMateria
+     //  int filaseleccionada= jMateria
     }//GEN-LAST:event_jbinscribirActionPerformed
 
     private void radioinscriptasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioinscriptasActionPerformed
