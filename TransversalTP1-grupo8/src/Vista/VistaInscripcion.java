@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import Modelo.Conexion;
+import Modelo.Inscripcion;
 
 
 public class VistaInscripcion extends javax.swing.JFrame {
@@ -176,6 +177,11 @@ public class VistaInscripcion extends javax.swing.JFrame {
 
         jbanular.setText("Anular Inscripcion");
         jbanular.setEnabled(false);
+        jbanular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbanularActionPerformed(evt);
+            }
+        });
 
         radioinscriptas.setText("Materias Inscriptas");
         radioinscriptas.addActionListener(new java.awt.event.ActionListener() {
@@ -185,6 +191,11 @@ public class VistaInscripcion extends javax.swing.JFrame {
         });
 
         radionoinscriptas.setText("Materias no inscriptas");
+        radionoinscriptas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radionoinscriptasActionPerformed(evt);
+            }
+        });
 
         jtesq.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -283,6 +294,36 @@ public class VistaInscripcion extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
        this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void radionoinscriptasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radionoinscriptasActionPerformed
+     
+        borrarFilaTabla();
+        radioinscriptas.setSelected(false);
+        cargarDatosNoInscriptas();
+        jbanular.setEnabled(false);
+        jbinscribir.setEnabled(true);
+    }//GEN-LAST:event_radionoinscriptasActionPerformed
+
+    private void jbanularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbanularActionPerformed
+       
+     int filaselecionada = jtesq.getSelectedRow();
+     if(filaselecionada!=-1){
+     
+         Alumno a = (Alumno) jcalu.getSelectedItem();
+         
+         int idMateria = (Integer) modelo.getValueAt(filaselecionada, 0);
+         String nombreMateria = (String) modelo.getValueAt(filaselecionada, 1);
+         int anio=(int) modelo.getValueAt(filaselecionada, 2);       
+        
+
+         Materia m = new Materia(idMateria,nombreMateria,anio,true);
+         
+         Inscripcion i = new Inscripcion(a,m,0);
+         borrarFilaTabla();
+         
+     }
+        
+    }//GEN-LAST:event_jbanularActionPerformed
 
     
     public static void main(String args[]) {

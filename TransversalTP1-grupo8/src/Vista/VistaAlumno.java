@@ -5,18 +5,56 @@ import Modelo.Conexion;
 import Persistencia.AlumnoDatos;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import org.mariadb.jdbc.Connection;
 
 public class VistaAlumno extends javax.swing.JFrame {
     private AlumnoDatos alumnoData;
+    private DefaultTableModel modelo;
     /**
      * Creates new form VistaAlumno
      */
     public VistaAlumno() {
         initComponents();
         alumnoData = new AlumnoDatos();
+        cargarCabecera();
+        rellenarTabla();
     }
+
+    public void cargarCabecera(){
+        modelo = new DefaultTableModel(){
+        @Override
+        public boolean isCellEditable(int f, int c){
+            return false;
+    }
+    
+    };
+        String[] nombres ={"ID","DNI","APELLIDO","NOMBRE","FECHA NAC"};
+        modelo.setColumnIdentifiers(nombres);
+        jTableAlumnos.setModel(modelo);
+    }
+    
+    public void rellenarTabla(){
+       int b = modelo.getRowCount()-1;
+        for (int i = b; i >0; i--) {
+            modelo.removeRow(i);
+        }
+            List<Alumno> alumnos = alumnoData.listarAlumnos();
+            
+            for (Alumno a : alumnos) {
+            Object[] fila = new Object[5];
+            fila[0] = a.getIdAlumno();
+            fila[1] = a.getDni();
+            fila[2] = a.getApellido();
+            fila[3] = a.getNombre();
+            fila[4] = a.getFechadenacimiento();
+
+            modelo.addRow(fila);
+        }
+        }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -50,7 +88,7 @@ public class VistaAlumno extends javax.swing.JFrame {
         apellidoTxt = new javax.swing.JTextField();
         nombreTxt = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        jTableAlumnos = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
@@ -134,7 +172,7 @@ public class VistaAlumno extends javax.swing.JFrame {
             }
         });
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        jTableAlumnos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -145,7 +183,7 @@ public class VistaAlumno extends javax.swing.JFrame {
                 "id alumno", "dni", "apellido", "nombre", "fecha nac", "esdado"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(jTableAlumnos);
 
         jButton2.setText("BORRAR");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -263,9 +301,7 @@ public class VistaAlumno extends javax.swing.JFrame {
                                                 .addGroup(jDesktopPane1Layout.createSequentialGroup()
                                                     .addComponent(jLabel13)
                                                     .addGap(28, 28, 28))
-                                                .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                                                    .addComponent(jLabel12)
-                                                    .addGap(18, 18, 18)))
+                                                .addComponent(jLabel12))
                                             .addGap(4, 4, 4)
                                             .addComponent(jdcFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                             .addGroup(jDesktopPane1Layout.createSequentialGroup()
@@ -425,7 +461,7 @@ public class VistaAlumno extends javax.swing.JFrame {
          Alumno nuevoAlumno = new Alumno(dni, apellido, nombre, fechaNac, estado);
          alumnoData.guardarAlumno(nuevoAlumno);
           JOptionPane.showMessageDialog(this, "Alumno: " + nombre + " " + apellido + " guardado con éxito!", "Guardado", JOptionPane.INFORMATION_MESSAGE);
-        
+          rellenarTabla(); 
        
          } catch (NumberFormatException ex) {
         JOptionPane.showMessageDialog(this, "Asegúrese de que el DNI sea un número válido y todos los campos estén completos.", "Error de Datos", JOptionPane.WARNING_MESSAGE);
@@ -503,7 +539,7 @@ public class VistaAlumno extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTableAlumnos;
     private com.toedter.calendar.JDateChooser jdcFechaNac;
     private javax.swing.JTextField nombreTxt;
     // End of variables declaration//GEN-END:variables

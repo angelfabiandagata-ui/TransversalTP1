@@ -122,6 +122,9 @@
         <Property name="text" type="java.lang.String" value="Anular Inscripcion"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbanularActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JRadioButton" name="radioinscriptas">
       <Properties>
@@ -135,6 +138,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Materias no inscriptas"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="radionoinscriptasActionPerformed"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane2">
       <AuxValues>
