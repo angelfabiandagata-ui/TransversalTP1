@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.naming.spi.DirStateFactory;
 import javax.swing.JOptionPane;
@@ -86,8 +87,46 @@ public class AlumnoDatos {
     }
 
     public List<Alumno> listarAlumnos() {
+        List<Alumno> alumnos = new ArrayList<>();
         String sql = "SELECT * FROM `alumno` WHERE `estado` = true";
-        try {
+        
+          try {
+        PreparedStatement ps = con.prepareStatement(sql);
+        ResultSet resultado = ps.executeQuery();
+
+
+        while (resultado.next()) {
+ 
+            Alumno alumno = new Alumno();
+            
+
+            alumno.setIdAlumno(resultado.getInt("idAlumno"));
+            alumno.setDni(resultado.getInt("dni"));
+            alumno.setApellido(resultado.getString("apellido"));
+            alumno.setNombre(resultado.getString("nombre"));
+            
+            java.sql.Date fechaSql = resultado.getDate("FechaNacimiento");
+            if (fechaSql != null) {
+                alumno.setFechadenacimiento(fechaSql.toLocalDate());
+            }
+            
+            alumno.setEstado(true);
+
+
+            alumnos.add(alumno);
+        }
+        
+        ps.close();
+
+    } catch (SQLException ex) {
+        System.out.println("Error al listar alumnos: " + ex.getMessage());
+    }
+
+
+    return alumnos;
+
+        
+       /* try {
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet resultado = ps.executeQuery();
 
@@ -104,9 +143,9 @@ public class AlumnoDatos {
             System.out.println("");
         }
 
-        return null;
+        return null;*/
     }
-
+    
     public void actualizarAlumno(Alumno alumno) {
         try {
             String sql = "UPDATE `alumno` SET dni = ?,apellido= ?,nombre=?,fechaNacimiento=? WHERE idAlumno = ?";
