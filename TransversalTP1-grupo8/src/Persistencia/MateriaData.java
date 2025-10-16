@@ -50,18 +50,28 @@ public class MateriaData {
             ps.setInt(1, id);
             ResultSet resultado = ps.executeQuery();
 
-            while (resultado.next()) {
-                System.out.println("Id: " + resultado.getInt("idMateria"));
-                System.out.println("Nombre: " + resultado.getString("nombre"));
-                System.out.println("Anio: " + resultado.getString("anio"));
-                System.out.println("Estado: " + resultado.getBoolean("estado"));
-                System.out.println("-----------------------------------------------------------");
-            }
-            System.out.println();
-        } catch (SQLException e) {
-            System.out.println("Materia no encontrada");
+           if (resultado.next()) {
+            
+            materia = new Materia(); 
+            
+            materia.setIdmateria(resultado.getInt("idMateria")); 
+            materia.setNombre(resultado.getString("nombre"));
+            materia.setAnio(resultado.getInt("anio")); 
+            materia.setEstado(resultado.getBoolean("estado"));
+            
+
+            resultado.close();
+            ps.close();
+
+
         }
-        return materia;
+    } catch (SQLException e) {
+        System.err.println("Error al buscar la materia: " + e.getMessage());
+    }
+    
+    // Si se encontró, retorna el objeto 'materia' lleno; si no, retorna null.
+    return materia;
+
     }
     
     public Materia buscarMateriaPorNombre(String nombre) {
