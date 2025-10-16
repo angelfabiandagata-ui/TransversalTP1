@@ -464,7 +464,45 @@ public class VistaAlumno extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
+// Declaración de LocalDate para el try-catch
+    LocalDate fechaNac = null; 
+    
+    try {
+
+        int idAlumno = Integer.parseInt(idTxt.getText()); 
+        
+        int dni = Integer.parseInt(dniTxt.getText());
+        String apellido = apellidoTxt.getText();
+        String nombre = nombreTxt.getText();
+        
+
+        java.util.Date fechaUtil = jdcFechaNac.getDate();
+        if (fechaUtil == null) {
+            throw new IllegalArgumentException("Debe seleccionar la fecha de nacimiento."); 
+        }
+        fechaNac = fechaUtil.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        
+ 
+        Alumno alumnoModificado = new Alumno(dni, apellido, nombre, fechaNac, true); 
+        alumnoModificado.setIdAlumno(idAlumno); 
+        
+
+        alumnoData.actualizarAlumno(alumnoModificado);
+
+
+        JOptionPane.showMessageDialog(this, "Alumno: " + nombre + " actualizado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        
+
+        rellenarTabla(); 
+
+    } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(this, "Asegúrese de que ID y DNI sean números válidos.", "Error de Datos", JOptionPane.WARNING_MESSAGE);
+    } catch (IllegalArgumentException ex) {
+        JOptionPane.showMessageDialog(this, ex.getMessage(), "Campo Requerido", JOptionPane.WARNING_MESSAGE);
+    } catch (Exception ex) {
+         JOptionPane.showMessageDialog(this, "Error de actualización: " + ex.getMessage(), "Error Fatal", JOptionPane.ERROR_MESSAGE);
+    }
+
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
