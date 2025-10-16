@@ -89,7 +89,7 @@ public class VistaAlumno extends javax.swing.JFrame {
         nombreTxt = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableAlumnos = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
         jButton4 = new javax.swing.JButton();
@@ -185,10 +185,10 @@ public class VistaAlumno extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(jTableAlumnos);
 
-        jButton2.setText("BORRAR");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminar.setText("BORRAR");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnEliminarActionPerformed(evt);
             }
         });
 
@@ -243,7 +243,7 @@ public class VistaAlumno extends javax.swing.JFrame {
         jDesktopPane1.setLayer(apellidoTxt, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(nombreTxt, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jScrollPane2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jButton2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(btnEliminar, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jRadioButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jRadioButton2, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jButton4, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -307,7 +307,7 @@ public class VistaAlumno extends javax.swing.JFrame {
                                 .addComponent(jButton1)))
                         .addGap(0, 135, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(141, 141, 141))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
                 .addGap(42, 42, 42)
@@ -373,7 +373,7 @@ public class VistaAlumno extends javax.swing.JFrame {
                         .addGap(57, 57, 57))
                     .addGroup(jDesktopPane1Layout.createSequentialGroup()
                         .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(jRadioButton2)
                                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -417,9 +417,39 @@ public class VistaAlumno extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_idTxtActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+
+    int filaSeleccionada = jTableAlumnos.getSelectedRow();
+    
+    if (filaSeleccionada != -1) {
+
+        int idEliminar = (Integer) modelo.getValueAt(filaSeleccionada, 0); 
+        
+
+        int confirmacion = JOptionPane.showConfirmDialog(this, 
+                "¿Está seguro de que desea eliminar al alumno con ID " + idEliminar + "?", 
+                "Confirmar Eliminación", JOptionPane.YES_NO_OPTION);
+        
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            try {
+
+                alumnoData.borrarAlumno(idEliminar);
+                
+
+                JOptionPane.showMessageDialog(this, "Alumno eliminado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                rellenarTabla(); 
+                
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Error al eliminar: " + ex.getMessage(), "Error de BD", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    } else {
+        // Mensaje si no hay fila seleccionada
+        JOptionPane.showMessageDialog(this, "Debe seleccionar una fila para eliminar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+    }
+
+        
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
         // TODO add your handling code here:
@@ -509,13 +539,13 @@ public class VistaAlumno extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField apellidoTxt;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JCheckBox checkEstado;
     private javax.swing.JTextField dniTxt;
     private javax.swing.JTextField idTxt;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
