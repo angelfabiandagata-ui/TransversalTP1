@@ -25,7 +25,7 @@ public class VistaInscripcion extends javax.swing.JFrame {
     //base de datos
     String url = "jdbc:mariadb://localhost:3306/tu_base";
     String usuario = "root";
-    String password = "1234"; // cambia según tu contraseña
+    String password = ""; 
 
 // Crear la conexión
     Connection con = null;
@@ -45,7 +45,7 @@ public class VistaInscripcion extends javax.swing.JFrame {
         
   
     Conexion c = new Conexion(url, usuario, password);
-    Connection con = (Connection) c.buscarConexion(); 
+        con = (Connection) c.buscarConexion();
 
         aData = new AlumnoDatos(con);
         inscData = new InscripcionData(con);
@@ -57,20 +57,8 @@ public class VistaInscripcion extends javax.swing.JFrame {
         cargaAlumnos();
         armarCabeceraTabla();
     }
-    //formularioInscripcion(){
-  public void VistaInscripcion(){
-      initComponents();
-      
-      aData = new AlumnoDatos();
-      ListaA = (ArrayList<Alumno>) aData.listarAlumnos();
-      modelo = new DefaultTableModel();
-      inscData = new InscripcionData();
-      mData = new MateriaData();
-      
-      cargaAlumnos();
-      armarCabeceraTabla();
-      
-  }
+
+//formularioInscripcion(){
 //    
 //    }
         private void cargaAlumnos() {
@@ -89,7 +77,7 @@ public class VistaInscripcion extends javax.swing.JFrame {
         for (Object it : filaCabecera) {
             modelo.addColumn(it);
         }
-       jTable1.setModel(modelo);
+       jtesq.setModel(modelo);
     }
     
     private void borrarFilaTabla(){
@@ -278,27 +266,25 @@ public class VistaInscripcion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbinscribirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbinscribirActionPerformed
-    /*int filaseleccionada = jtesq.getSelectedRow();
+    
+        int filaseleccionada = jtesq.getSelectedRow();
      if(filaseleccionada!=-1){
-         Alumno a = (Alumno)cboxAlumno.getSelectedItem();
+         Alumno a = (Alumno)jcalu.getSelectedItem();
          
-         int idMateria= (Integer)modelo.getValueAt(filaseleccionada, 0):
-         String nombreMateria= (String)modelo.getValueAt(filaseleccionada, 1);
-         int anio= modelo.getValueAt(filaseleccionada, 2);
-         Materia m= new Materia(idMateriam nombreMateria, anio, true);
+         int idmateria=  (int) (modelo.getValueAt(filaseleccionada, 0));
+         String nombre= (String) modelo.getValueAt(filaseleccionada, 1);
+         int anio= (int) modelo.getValueAt(filaseleccionada, 2);
+         Materia m= new Materia(idmateria, nombre, anio, true);
          
          Inscripcion i = new Inscripcion(a,m,0);
          inscData.guardarInscripcion(i);
          borrarFilaTabla();
-         
-         
-     }*/
-     
-             
+                     
     }//GEN-LAST:event_jbinscribirActionPerformed
 
     private void radioinscriptasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioinscriptasActionPerformed
 
+        
         borrarFilaTabla();
         radionoinscriptas.setSelected(false);
         cargarDatosInscriptas();
