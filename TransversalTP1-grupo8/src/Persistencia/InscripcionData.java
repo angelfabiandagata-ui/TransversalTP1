@@ -34,25 +34,34 @@ public class InscripcionData {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-   public void guardarInscripcion(Inscripcion insc) { 
-       String sql = "INSERT INTO inscripcion(idAlumno,idMateria, nota) VALUES (?,?,?)";
-       try {
-           PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-           ps.setInt(1, insc.getAlumno().getIdAlumno());
-           ps.setInt(2, insc.getMateria().getIdmateria());
-           ps.setDouble(3, insc.getNota());
-           ps.executeUpdate();
-           ResultSet rs = ps.getGeneratedKeys();
-           if (rs.next()) {
-               insc.setIdInscripcion(rs.getInt(1));
-               System.out.println("Inscripto registrada");
-           }
-           rs.close();
-           ps.close();
-       } catch (SQLException ex) {
-           System.out.println("Ocurrio un error al inscribir" + ex.getMessage());
-       }
-   }
+public void guardarInscripcion(Inscripcion insc) { 
+    
+    String sql = "INSERT INTO inscripcion (idAlumno, idMateria, nota) VALUES (?, ?, ?)";
+    try {
+        
+        PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        ps.setInt(1, insc.getAlumno().getIdAlumno());
+        ps.setInt(2, insc.getMateria().getIdmateria());
+        ps.setDouble(3, insc.getNota());
+
+        int filas = ps.executeUpdate();
+
+        if (filas > 0) {
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                insc.setIdInscripcion(rs.getInt(1));
+            }
+            JOptionPane.showMessageDialog(null, " Inscripción guardada correctamente");
+        } else {
+            JOptionPane.showMessageDialog(null, "️ No se insertó ningún registro");
+        }
+
+        ps.close();
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "❌ Error al inscribir: " + ex.getMessage());
+    }
+}
+
 //
     public List<Inscripcion> obtenerInscripciones() {
     

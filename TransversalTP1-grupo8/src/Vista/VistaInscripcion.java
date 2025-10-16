@@ -22,30 +22,27 @@ import Modelo.Inscripcion;
 
 public class VistaInscripcion extends javax.swing.JFrame {
 
-    //base de datos
-    String url = "jdbc:mariadb://localhost:3306/tu_base";
-    String usuario = "root";
-    String password = ""; 
 
 // Crear la conexión
-    Connection con = null;
     
-    private ArrayList<Materia> ListaM;
-    private ArrayList<Alumno>  ListaA;
+    private List<Materia> ListaM;
+    private List<Alumno> ListaA;
+
     
     private InscripcionData inscData;
     private MateriaData mData;
     private AlumnoDatos aData;
             
+    Conexion c = new Conexion("jdbc:mariadb://localhost:3306/tu_base", "root", "");
+    Connection con = (Connection) c.buscarConexion();
+
+    
+    
     private DefaultTableModel modelo;
     ResultSet rs ;
 
     public VistaInscripcion() {
         initComponents();
-        
-  
-    Conexion c = new Conexion(url, usuario, password);
-        con = (Connection) c.buscarConexion();
 
         aData = new AlumnoDatos(con);
         inscData = new InscripcionData(con);
@@ -285,6 +282,7 @@ public class VistaInscripcion extends javax.swing.JFrame {
          Inscripcion i = new Inscripcion(a,m,0);
          inscData.guardarInscripcion(i);
          borrarFilaTabla();
+         cargarDatosNoInscriptas();
                      
     }//GEN-LAST:event_jbinscribirActionPerformed
     }
@@ -329,13 +327,18 @@ public class VistaInscripcion extends javax.swing.JFrame {
          
          Inscripcion i = new Inscripcion(a,m,0);
          borrarFilaTabla();
-         
+         cargarDatosInscriptas();
      }
         
     }//GEN-LAST:event_jbanularActionPerformed
 
     private void jcaluActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcaluActionPerformed
-        // TODO add your handling code here:
+    borrarFilaTabla();
+    if (radioinscriptas.isSelected()) {
+    cargarDatosInscriptas();
+    } else if (radionoinscriptas.isSelected()) {
+    cargarDatosNoInscriptas();
+    }
     }//GEN-LAST:event_jcaluActionPerformed
 
     

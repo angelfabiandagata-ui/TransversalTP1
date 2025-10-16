@@ -16,6 +16,7 @@ import org.mariadb.jdbc.Statement;
 import org.mariadb.jdbc.client.result.Result;
 import org.mariadb.jdbc.client.result.ResultSetMetaData;
 
+
 //Atributos alumnodatos
 public class AlumnoDatos {
 
