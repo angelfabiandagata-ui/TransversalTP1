@@ -281,7 +281,8 @@ public class VistaInscripcion extends javax.swing.JFrame {
          borrarFilaTabla();
                      
     }//GEN-LAST:event_jbinscribirActionPerformed
-
+    }
+     
     private void radioinscriptasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioinscriptasActionPerformed
 
         
