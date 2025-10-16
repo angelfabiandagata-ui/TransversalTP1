@@ -104,7 +104,7 @@ public class VistaInscripcion extends javax.swing.JFrame {
     private void cargarDatosNoInscriptas(){
     
     Alumno select = (Alumno) jcalu.getSelectedItem();
-//    ListaM = (ArrayList) inscData.obtenerMateriasNOCursadas(select.getIdAlumno());
+    ListaM = (ArrayList) inscData.obtenerMateriasNOCursadas(select.getIdAlumno());
     
         for (Materia m : ListaM) {
             modelo.addRow(new Object[] {m.getIdmateria(),m.getNombre(),m.getAnio() });
@@ -278,7 +278,23 @@ public class VistaInscripcion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbinscribirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbinscribirActionPerformed
-     //  int filaseleccionada= jMateria
+    /*int filaseleccionada = jtesq.getSelectedRow();
+     if(filaseleccionada!=-1){
+         Alumno a = (Alumno)cboxAlumno.getSelectedItem();
+         
+         int idMateria= (Integer)modelo.getValueAt(filaseleccionada, 0):
+         String nombreMateria= (String)modelo.getValueAt(filaseleccionada, 1);
+         int anio= modelo.getValueAt(filaseleccionada, 2);
+         Materia m= new Materia(idMateriam nombreMateria, anio, true);
+         
+         Inscripcion i = new Inscripcion(a,m,0);
+         inscData.guardarInscripcion(i);
+         borrarFilaTabla();
+         
+         
+     }*/
+     
+             
     }//GEN-LAST:event_jbinscribirActionPerformed
 
     private void radioinscriptasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioinscriptasActionPerformed
