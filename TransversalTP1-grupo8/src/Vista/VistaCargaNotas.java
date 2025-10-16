@@ -7,8 +7,11 @@ package Vista;
 import Modelo.Alumno;
 import Modelo.Conexion;
 import Modelo.Materia;
+import Persistencia.AlumnoDatos;
 import Persistencia.InscripcionData;
 import Persistencia.MateriaData;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.mariadb.jdbc.Connection;
@@ -19,12 +22,44 @@ import org.mariadb.jdbc.Connection;
  */
 public class VistaCargaNotas extends javax.swing.JFrame {
 
+    private DefaultTableModel modelo;
+    private InscripcionData insData;
+    private AlumnoDatos almData;
+
     /**
      * Creates new form VistaCargaNotas
      */
     public VistaCargaNotas() {
         initComponents();
         this.setLocationRelativeTo(null);
+        Connection con = (Connection) new Conexion("jdbc:mariadb://localhost:3306/sgulp_equipo_8", "root", "").buscarConexion();
+        almData = new AlumnoDatos(con);
+        insData = new InscripcionData(con);
+        modelo = new DefaultTableModel(
+        new Object [][] {},
+        new String [] {"ID Materia", "Materia", "Nota"}
+    ) {
+
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return column == 2;
+        }
+    };
+        tablaNotas.setModel(modelo);
+                
+        
+        cargarAlumnos();
+        limpiarTabla();
+    }
+    
+    private void cargarAlumnos(){
+        comboAlumno.removeAllItems();
+        for (Alumno alumno : almData.listarAlumnos()) {
+            comboAlumno.addItem(alumno);
+        }
+    }
+    private void limpiarTabla(){
+        modelo.setRowCount(0);
     }
 
     /**
@@ -43,11 +78,10 @@ public class VistaCargaNotas extends javax.swing.JFrame {
         BtnGuardar = new javax.swing.JButton();
         BtnCancelar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        comboAlumno = new javax.swing.JComboBox<>();
-        jLabel2 = new javax.swing.JLabel();
-        comboMateria = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         Salir = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        comboAlumno = new javax.swing.JComboBox<>();
 
         jButton3.setText("Cancelar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -57,9 +91,9 @@ public class VistaCargaNotas extends javax.swing.JFrame {
         });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(153, 255, 153));
+        setBackground(new java.awt.Color(102, 153, 255));
 
-        jDesktopPane1.setBackground(new java.awt.Color(153, 255, 153));
+        jDesktopPane1.setBackground(new java.awt.Color(102, 153, 255));
 
         tablaNotas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -75,12 +109,23 @@ public class VistaCargaNotas extends javax.swing.JFrame {
             Class[] types = new Class [] {
                 java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, true
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
         });
         jScrollPane1.setViewportView(tablaNotas);
+        if (tablaNotas.getColumnModel().getColumnCount() > 0) {
+            tablaNotas.getColumnModel().getColumn(0).setResizable(false);
+            tablaNotas.getColumnModel().getColumn(2).setResizable(false);
+        }
 
         BtnGuardar.setText("Guardar");
         BtnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -97,28 +142,14 @@ public class VistaCargaNotas extends javax.swing.JFrame {
         });
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Alumno:");
-        jLabel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jLabel1.setText("Seleccione un alumno:");
 
-        comboAlumno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        comboAlumno.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboAlumnoActionPerformed(evt);
-            }
-        });
-
-        jLabel2.setText("Materias:");
-        jLabel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        comboMateria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        comboMateria.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboMateriaActionPerformed(evt);
-            }
-        });
-
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Cargar Notas");
 
+        Salir.setBackground(new java.awt.Color(255, 51, 51));
+        Salir.setForeground(new java.awt.Color(255, 255, 255));
         Salir.setText("Salir");
         Salir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -130,58 +161,51 @@ public class VistaCargaNotas extends javax.swing.JFrame {
         jDesktopPane1.setLayer(BtnGuardar, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(BtnCancelar, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(comboAlumno, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(comboMateria, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(Salir, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jSeparator1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(comboAlumno, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
                 .addContainerGap(53, Short.MAX_VALUE)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                        .addComponent(BtnGuardar)
-                        .addGap(102, 102, 102)
-                        .addComponent(BtnCancelar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
-                        .addComponent(Salir))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE)
-                    .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(BtnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(70, 70, 70)
+                        .addComponent(BtnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboMateria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(1, 1, 1)))
+                        .addComponent(Salir))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
+                    .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(comboAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jSeparator1))
                 .addGap(54, 54, 54))
-            .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                .addGap(214, 214, 214)
-                .addComponent(jLabel3)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(comboAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2)
-                    .addComponent(comboMateria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BtnGuardar)
-                    .addComponent(BtnCancelar)
-                    .addComponent(Salir))
+                    .addComponent(BtnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Salir, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(22, 22, 22))
         );
 
@@ -199,16 +223,6 @@ public class VistaCargaNotas extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void comboAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboAlumnoActionPerformed
-      //Aca tienen que aparecer los alumnos que estan registrados
-      
-    }//GEN-LAST:event_comboAlumnoActionPerformed
-
-    private void comboMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboMateriaActionPerformed
-        //Aca tienen que aparecer las materias que estan.
-       
-    }//GEN-LAST:event_comboMateriaActionPerformed
-
     private void BtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCancelarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_BtnCancelarActionPerformed
@@ -222,58 +236,25 @@ public class VistaCargaNotas extends javax.swing.JFrame {
     }//GEN-LAST:event_SalirActionPerformed
 
     private void BtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnGuardarActionPerformed
-                                                                                             
-    
         try {
-       
-        Conexion c = new Conexion("jdbc:mariadb://localhost:3306/sgulp_equipo_8", "root", "");
-        Connection con = (Connection) c.buscarConexion();
-        InscripcionData insData = new InscripcionData(con);
-        MateriaData matData = new MateriaData(con);
-       
-
-        
-        DefaultTableModel model = (DefaultTableModel) tablaNotas.getModel();
-
-        
-        for (int i = 0; i < model.getRowCount(); i++) {
-            // Obtener los valores de cada columna
-            int idAlumno = Integer.parseInt(model.getValueAt(i, 0).toString());
-            String nombreMateria = model.getValueAt(i, 1).toString();
-            double nota1 = Double.parseDouble(model.getValueAt(i, 2).toString());
-            double nota2 = Double.parseDouble(model.getValueAt(i, 3).toString());
-
-            boolean promocion = false;
-            if (model.getColumnCount() > 4 && model.getValueAt(i, 4) != null) {
-                promocion = (boolean) model.getValueAt(i, 4);
+            Alumno alumnoSelec = (Alumno) comboAlumno.getSelectedItem();
+            if (alumnoSelec == null) {
+                JOptionPane.showMessageDialog(this, "Porfavor, elegi un alumno");
             }
-
             
-            Materia materia = matData.buscarMateriaPorNombre(nombreMateria);
-            if (materia == null) {
-                JOptionPane.showMessageDialog(this, 
-                    "⚠️ No se encontró la materia: " + nombreMateria);
-                continue;
+            int idAlumno = alumnoSelec.getIdAlumno();
+            for (int i = 0; i < modelo.getRowCount(); i++) {
+                int IdMateria = (int)modelo.getValueAt(i, 0);
+                double nuevaNota = Double.parseDouble(modelo.getValueAt(i, 2).toString());
+                insData.actualizarNota(idAlumno, IdMateria, nuevaNota);
             }
+            JOptionPane.showMessageDialog(this, "✅ Notas guardadas correctamente.");
 
-            int idMateria = materia.getIdmateria();
-
-            
-            insData.actualizarNota(idAlumno, idMateria, nota2);
-
-                                                      
-            if (promocion) {
-                // insData.actualizarPromocion(idAlumno, idMateria, true);
-            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "⚠️ Verifique que todas las notas sean numéricas.");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "❌ Error al guardar notas: " + e.getMessage());
         }
-
-        JOptionPane.showMessageDialog(this, "✅ Notas guardadas correctamente.");
-
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "⚠️ Verifique que todas las notas sean numéricas.");
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "❌ Error al guardar notas: " + e.getMessage());
-    }
 
 
     }//GEN-LAST:event_BtnGuardarActionPerformed
@@ -317,14 +298,13 @@ public class VistaCargaNotas extends javax.swing.JFrame {
     private javax.swing.JButton BtnCancelar;
     private javax.swing.JButton BtnGuardar;
     private javax.swing.JButton Salir;
-    private javax.swing.JComboBox<String> comboAlumno;
-    private javax.swing.JComboBox<String> comboMateria;
+    private javax.swing.JComboBox<Alumno> comboAlumno;
     private javax.swing.JButton jButton3;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable tablaNotas;
     // End of variables declaration//GEN-END:variables
 }

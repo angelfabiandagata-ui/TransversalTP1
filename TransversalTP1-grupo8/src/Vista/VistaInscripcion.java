@@ -212,6 +212,12 @@ public class VistaInscripcion extends javax.swing.JFrame {
             }
         });
 
+        jcalu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcaluActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -327,6 +333,10 @@ public class VistaInscripcion extends javax.swing.JFrame {
      }
         
     }//GEN-LAST:event_jbanularActionPerformed
+
+    private void jcaluActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcaluActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcaluActionPerformed
 
     
     public static void main(String args[]) {
