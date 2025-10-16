@@ -277,15 +277,23 @@ public class VistaInscripcion extends javax.swing.JFrame {
          int idmateria=  (int) (modelo.getValueAt(filaseleccionada, 0));
          String nombre= (String) modelo.getValueAt(filaseleccionada, 1);
          int anio= (int) modelo.getValueAt(filaseleccionada, 2);
-         Materia m= new Materia(idmateria, nombre, anio, true);
-         
+        
+         Materia m= new Materia(idmateria, nombre, anio, true);       
          Inscripcion i = new Inscripcion(a,m,0);
+         
          inscData.guardarInscripcion(i);
          borrarFilaTabla();
-         cargarDatosNoInscriptas();
+         
+        if(radionoinscriptas.isSelected()){
+            cargarDatosNoInscriptas();
+        } else {
+            cargarDatosInscriptas();
+        }
+    }
+
                      
     }//GEN-LAST:event_jbinscribirActionPerformed
-    }
+    
      
     private void radioinscriptasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioinscriptasActionPerformed
 
@@ -313,22 +321,22 @@ public class VistaInscripcion extends javax.swing.JFrame {
 
     private void jbanularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbanularActionPerformed
        
-     int filaselecionada = jtesq.getSelectedRow();
-     if(filaselecionada!=-1){
-     
-         Alumno a = (Alumno) jcalu.getSelectedItem();
-         
-         int idMateria = (Integer) modelo.getValueAt(filaselecionada, 0);
-         String nombreMateria = (String) modelo.getValueAt(filaselecionada, 1);
-         int anio=(int) modelo.getValueAt(filaselecionada, 2);       
-        
+      int filaselecionada = jtesq.getSelectedRow();
+    if(filaselecionada != -1){
+        Alumno a = (Alumno) jcalu.getSelectedItem();
+        int idMateria = (Integer) modelo.getValueAt(filaselecionada, 0);
 
-         Materia m = new Materia(idMateria,nombreMateria,anio,true);
-         
-         Inscripcion i = new Inscripcion(a,m,0);
-         borrarFilaTabla();
-         cargarDatosInscriptas();
-     }
+        // Llamar a tu método de borrado
+        inscData.borrarinscripcionMateriaAlumno(a.getIdAlumno(), idMateria);
+
+        // Recargar tabla
+        borrarFilaTabla();
+        if(radioinscriptas.isSelected()){
+            cargarDatosInscriptas();
+        } else {
+            cargarDatosNoInscriptas();
+        }
+    }
         
     }//GEN-LAST:event_jbanularActionPerformed
 

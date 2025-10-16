@@ -189,7 +189,7 @@ public List<Materia> obtenerMateriasNOCursadas(int idAlumno) {
     public void borrarinscripcionMateriaAlumno(int idAlumno, int idMateria) {
 
         try {                     
-            String sql = "DELETE FROM inscripcion WHERE idAlumno = ? and idMateria";
+            String sql = "DELETE FROM inscripcion WHERE idAlumno = ? and idMateria ?";
             PreparedStatement ps = con.prepareStatement(sql);
             
             ps.setInt(1, idAlumno);
