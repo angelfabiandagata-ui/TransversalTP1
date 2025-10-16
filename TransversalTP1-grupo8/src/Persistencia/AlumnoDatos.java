@@ -64,26 +64,39 @@ public class AlumnoDatos {
         }
     }
     public Alumno buscarAlumno(int id) {
+       
         String sql = "SELECT `idAlumno`, `dni`, `apellido`, `nombre`, `fechaNacimiento`, `estado` FROM `alumno` WHERE idAlumno = ?";
-        Alumno alumno = null;
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, id);
-            ResultSet resultado = ps.executeQuery();
+    Alumno alumno = null; 
+    
+    try {
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, id);
+        ResultSet resultado = ps.executeQuery();
 
-            while (resultado.next()) {
-                System.out.println("Id: " + resultado.getInt("idAlumno"));
-                System.out.println("Dni: " + resultado.getInt("dni"));
-                System.out.println("Apellido: " + resultado.getString("apellido"));
-                System.out.println("Apellido: " + resultado.getString("nombre"));
-                System.out.println("Estado: " + resultado.getBoolean("estado"));
-                System.out.println("-----------------------------------------------------------");
+        if (resultado.next()) { 
+            alumno = new Alumno(); 
+            
+            alumno.setIdAlumno(resultado.getInt("idAlumno"));
+            alumno.setDni(resultado.getInt("dni"));
+            alumno.setApellido(resultado.getString("apellido"));
+            alumno.setNombre(resultado.getString("nombre"));
+            
+            java.sql.Date fechaSql = resultado.getDate("fechaNacimiento");
+            if (fechaSql != null) {
+                alumno.setFechadenacimiento(fechaSql.toLocalDate());
             }
-            System.out.println();
-        } catch (SQLException e) {
-            System.out.println("Materia no encontrada");
+            
+            alumno.setEstado(resultado.getBoolean("estado"));
+            
+            resultado.close();
+            ps.close();
         }
-        return alumno;
+    } catch (SQLException e) {
+        System.err.println("Error al buscar el alumno: " + e.getMessage());
+    }
+    return alumno; 
+
+
     }
 
     public List<Alumno> listarAlumnos() {

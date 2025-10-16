@@ -92,7 +92,7 @@ public class VistaAlumno extends javax.swing.JFrame {
         btnEliminar = new javax.swing.JButton();
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
-        jButton4 = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         checkEstado = new javax.swing.JCheckBox();
@@ -204,10 +204,10 @@ public class VistaAlumno extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setText("Buscar");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnBuscarActionPerformed(evt);
             }
         });
 
@@ -246,7 +246,7 @@ public class VistaAlumno extends javax.swing.JFrame {
         jDesktopPane1.setLayer(btnEliminar, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jRadioButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jRadioButton2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jButton4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(btnBuscar, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jButton5, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jButton6, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(checkEstado, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -295,7 +295,7 @@ public class VistaAlumno extends javax.swing.JFrame {
                                                         .addComponent(jLabel7)
                                                         .addComponent(idTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                                         .addGap(86, 86, 86)
-                                        .addComponent(jButton4))
+                                        .addComponent(btnBuscar))
                                     .addGroup(jDesktopPane1Layout.createSequentialGroup()
                                         .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel13)
@@ -343,7 +343,7 @@ public class VistaAlumno extends javax.swing.JFrame {
                         .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
                             .addComponent(idTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton4))
+                            .addComponent(btnBuscar))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9)
@@ -459,12 +459,53 @@ public class VistaAlumno extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jRadioButton2ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+       try {
+
+        int idBusqueda = Integer.parseInt(idTxt.getText());
+
+        Alumno alumnoEncontrado = alumnoData.buscarAlumno(idBusqueda);
+        
+
+        if (alumnoEncontrado != null) {
+
+            idTxt.setText(String.valueOf(alumnoEncontrado.getIdAlumno())); 
+            
+
+            dniTxt.setText(String.valueOf(alumnoEncontrado.getDni()));
+            apellidoTxt.setText(alumnoEncontrado.getApellido());
+            nombreTxt.setText(alumnoEncontrado.getNombre());
+            
+
+            LocalDate fechaLocal = alumnoEncontrado.getFechadenacimiento();
+            if (fechaLocal != null) {
+
+                java.util.Date fechaUtil = java.sql.Date.valueOf(fechaLocal); 
+                jdcFechaNac.setDate(fechaUtil);
+            } else {
+                jdcFechaNac.setDate(null);
+            }
+            
+
+            checkEstado.setSelected(alumnoEncontrado.getEstado());
+
+            JOptionPane.showMessageDialog(this, "¡Alumno encontrado y cargado!", "Búsqueda Exitosa", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+
+            JOptionPane.showMessageDialog(this, "No se encontró un alumno con ese ID.", "No Encontrado", JOptionPane.WARNING_MESSAGE);
+ 
+        }
+
+    } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(this, "Ingrese un ID válido (número entero).", "Error de Entrada", JOptionPane.WARNING_MESSAGE);
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error al buscar: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-// Declaración de LocalDate para el try-catch
+
     LocalDate fechaNac = null; 
     
     try {
@@ -577,6 +618,7 @@ public class VistaAlumno extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField apellidoTxt;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
@@ -585,7 +627,6 @@ public class VistaAlumno extends javax.swing.JFrame {
     private javax.swing.JTextField idTxt;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JComboBox<String> jComboBox1;
