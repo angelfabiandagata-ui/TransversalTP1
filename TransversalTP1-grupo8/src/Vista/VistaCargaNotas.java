@@ -9,8 +9,6 @@ import Modelo.Conexion;
 import Modelo.Materia;
 import Persistencia.AlumnoDatos;
 import Persistencia.InscripcionData;
-import Persistencia.MateriaData;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -157,6 +155,12 @@ public class VistaCargaNotas extends javax.swing.JFrame {
             }
         });
 
+        comboAlumno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboAlumnoActionPerformed(evt);
+            }
+        });
+
         jDesktopPane1.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(BtnGuardar, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(BtnCancelar, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -258,6 +262,25 @@ public class VistaCargaNotas extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_BtnGuardarActionPerformed
+
+    private void comboAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboAlumnoActionPerformed
+        limpiarTabla();
+        
+        Alumno alumnoSelec = (Alumno) comboAlumno.getSelectedItem();
+        
+        if (alumnoSelec == null) {
+            return;
+        }
+        List<Materia> materia = insData.obtenerMateriasCursadas(alumnoSelec.getIdAlumno());
+        for (Materia materia1 : materia) {
+            modelo.addRow(new Object[]{
+            materia1.getIdmateria(),
+                materia1.getNombre(),
+                0.0
+            });
+        }
+        
+    }//GEN-LAST:event_comboAlumnoActionPerformed
 
     /**
      * @param args the command line arguments
