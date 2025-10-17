@@ -106,11 +106,6 @@
                                       <Component id="checkEstado" alignment="1" min="-2" pref="104" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                           <Group type="102" alignment="0" attributes="0">
-                                              <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="32767" attributes="0"/>
-                                              <Component id="nombreTxt" min="-2" pref="100" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
                                               <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="32767" attributes="0"/>
                                               <Component id="apellidoTxt" min="-2" pref="100" max="-2" attributes="0"/>
@@ -128,13 +123,26 @@
                                                   <Component id="idTxt" min="-2" pref="100" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="jLabel11" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jLabel12" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace min="22" max="32767" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Group type="102" attributes="0">
+                                                      <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                                                      <Component id="jdcFechaNac" min="-2" max="-2" attributes="0"/>
+                                                  </Group>
+                                                  <Component id="nombreTxt" min="-2" pref="100" max="-2" attributes="0"/>
+                                              </Group>
+                                          </Group>
                                       </Group>
                                   </Group>
                                   <EmptySpace min="-2" pref="86" max="-2" attributes="0"/>
                                   <Component id="btnBuscar" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
@@ -237,7 +245,10 @@
                               <Component id="nombreTxt" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
-                          <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
+                              <Component id="jdcFechaNac" min="-2" pref="22" max="-2" attributes="0"/>
+                          </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -496,6 +507,8 @@
           </Events>
         </Component>
         <Component class="com.toedter.calendar.JYearChooser" name="jYearChooser1">
+        </Component>
+        <Component class="com.toedter.calendar.JDateChooser" name="jdcFechaNac">
         </Component>
       </SubComponents>
     </Container>

@@ -33,7 +33,7 @@ public class VistaInscripcion extends javax.swing.JFrame {
     private MateriaData mData;
     private AlumnoDatos aData;
             
-    Conexion c = new Conexion("jdbc:mariadb://localhost:3306/tu_base", "root", "");
+    Conexion c = new Conexion("jdbc:mariadb://localhost:3306/sgulp_equipo_8", "root", "");
     Connection con = (Connection) c.buscarConexion();
 
     

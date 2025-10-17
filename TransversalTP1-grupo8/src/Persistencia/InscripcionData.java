@@ -132,7 +132,7 @@ public void guardarInscripcion(Inscripcion insc) {
         List<Materia> materias = new ArrayList<>();
          String sql = "SELECT m.* FROM materia m "
                + "JOIN inscripcion i ON m.idMateria = i.idMateria "
-               + "WHERE i.idAlumno = ? AND i.nota >= 7";
+               + "WHERE i.idAlumno = ?";
          
          try {
         PreparedStatement ps = con.prepareStatement(sql);
@@ -189,7 +189,7 @@ public List<Materia> obtenerMateriasNOCursadas(int idAlumno) {
     public void borrarinscripcionMateriaAlumno(int idAlumno, int idMateria) {
 
         try {                     
-            String sql = "DELETE FROM inscripcion WHERE idAlumno = ? and idMateria ?";
+            String sql = "DELETE FROM inscripcion WHERE idAlumno = ? and idMateria = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             
             ps.setInt(1, idAlumno);
