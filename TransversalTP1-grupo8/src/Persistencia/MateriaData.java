@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -118,25 +119,31 @@ public class MateriaData {
 
     }
     public List<Materia> listarMaterias() {
-        String sql = "SELECT * FROM `materias`";
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ResultSet resultado = ps.executeQuery();
+    String sql = "SELECT * FROM materia";
+    List<Materia> materias = new ArrayList<>();
+    
+    try {
+        PreparedStatement ps = con.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
 
-            while (resultado.next()) {
-                System.out.println("idmateria: " + resultado.getInt("idMateria"));
-                System.out.println("nombre:" + resultado.getString("nombre"));
-                System.out.println("año: " + resultado.getInt("anio"));
-                System.out.println("estado: " + resultado.getBoolean("estado"));
-                System.out.println("-----------------------------------------------------------");
-            }
-
-        } catch (SQLException ex) {
-            System.out.println("");
+        while (rs.next()) {
+            Materia m = new Materia();
+            m.setIdmateria(rs.getInt("idMateria"));
+            m.setNombre(rs.getString("nombre"));
+            m.setAnio(rs.getInt("anio"));
+            m.setEstado(rs.getBoolean("estado"));
+            System.out.println("idmateria: " + m.getIdmateria());
+            materias.add(m);
         }
 
-        return null;
+        ps.close();
+
+    } catch (SQLException ex) {
+        System.out.println("Error al listar materias: " + ex.getMessage());
     }
+
+    return materias;
+}
 
     
 //    public void actualizarAlumno(Alumno a) {

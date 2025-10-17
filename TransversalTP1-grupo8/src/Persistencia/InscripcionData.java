@@ -26,13 +26,15 @@ public class InscripcionData {
     private MateriaData md= new MateriaData();
     private AlumnoDatos ad= new AlumnoDatos();
     
+    
     public InscripcionData(Connection conexion) {
         this.con = conexion;
     }
 
     public InscripcionData() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
+   
 
 public void guardarInscripcion(Inscripcion insc) { 
     
@@ -127,34 +129,42 @@ public void guardarInscripcion(Inscripcion insc) {
 }
       
 
-    public List<Materia> obtenerMateriasCursadas(int idAlumno) {
+    public List<Inscripcion> obtenerMateriasCursadas(int idAlumno) {
         
-        List<Materia> materias = new ArrayList<>();
-         String sql = "SELECT m.* FROM materia m "
+    List<Inscripcion> inscripciones = new ArrayList<>();
+
+    String sql = "SELECT m.*, i.nota FROM materia m "
                + "JOIN inscripcion i ON m.idMateria = i.idMateria "
                + "WHERE i.idAlumno = ?";
-         
-         try {
+
+    try {
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setInt(1, idAlumno);
         ResultSet rs = ps.executeQuery();
-     while (rs.next()) {
+
+        while (rs.next()) {
             Materia m = new Materia();
             m.setIdmateria(rs.getInt("idMateria"));
             m.setNombre(rs.getString("nombre"));
             m.setAnio(rs.getInt("anio"));
             m.setEstado(rs.getBoolean("estado"));
-            materias.add(m);
+
+            Inscripcion ins = new Inscripcion();
+            ins.setMateria(m);
+            ins.setNota(rs.getDouble("nota"));
+
+            inscripciones.add(ins);
         }
 
         ps.close();
-
     } catch (SQLException ex) {
         System.out.println("Error al obtener materias cursadas: " + ex.getMessage());
     }
 
-    return materias;
+    return inscripciones;
 }
+     
+
     
 //
 public List<Materia> obtenerMateriasNOCursadas(int idAlumno) {
@@ -234,33 +244,32 @@ public List<Materia> obtenerMateriasNOCursadas(int idAlumno) {
    
     public List<Alumno> obtenerAlumnosXMateria(int idMateria) {
   List<Alumno> alumnos = new ArrayList<>();
-    
-    String sql = "SELECT alumno.idAlumno, dni, nombre, apellido, fechaNacimiento, estado "
-               + "FROM inscripcion "
-               + "JOIN alumno ON (inscripcion.idAlumno = alumno.idAlumno) "
-               + "WHERE inscripcion.idMateria = ? AND alumno.estado = 1";
-    
+
+    String sql = "SELECT a.idAlumno, a.dni, a.nombre, a.apellido, a.estado "
+               + "FROM inscripcion i, alumno a "
+               + "WHERE i.idAlumno = a.idAlumno AND i.idMateria = ?";
+
     try {
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setInt(1, idMateria);
         ResultSet rs = ps.executeQuery();
-        
+
         while (rs.next()) {
-            Alumno alumno = new Alumno();
-            alumno.setIdAlumno(rs.getInt("idAlumno"));
-            alumno.setDni(rs.getInt("dni"));
-            alumno.setNombre(rs.getString("nombre"));
-            alumno.setApellido(rs.getString("apellido"));
-            alumno.setFechadenacimiento(rs.getDate("fechadenacimiento").toLocalDate());
-            alumno.setEstado(rs.getBoolean("estado"));
-            alumnos.add(alumno);
+            Alumno a = new Alumno();
+            a.setIdAlumno(rs.getInt("idAlumno"));
+            a.setDni(rs.getInt("dni"));
+            a.setNombre(rs.getString("nombre"));
+            a.setApellido(rs.getString("apellido"));
+            a.setEstado(rs.getBoolean("estado"));
+            alumnos.add(a);
         }
-        
+
         ps.close();
+
     } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(null, "Error al acceder a la tabla inscripción: " + ex.getMessage());
+        JOptionPane.showMessageDialog(null, "Error al obtener alumnos por materia: " + ex.getMessage());
     }
-    
+
     return alumnos;
 }
    

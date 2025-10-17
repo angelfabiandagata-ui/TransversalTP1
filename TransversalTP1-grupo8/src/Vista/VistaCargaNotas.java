@@ -6,6 +6,7 @@ package Vista;
 
 import Modelo.Alumno;
 import Modelo.Conexion;
+import Modelo.Inscripcion;
 import Modelo.Materia;
 import Persistencia.AlumnoDatos;
 import Persistencia.InscripcionData;
@@ -23,6 +24,9 @@ public class VistaCargaNotas extends javax.swing.JFrame {
     private DefaultTableModel modelo;
     private InscripcionData insData;
     private AlumnoDatos almData;
+    private Conexion conexion;
+    private Connection con;
+    
 
     /**
      * Creates new form VistaCargaNotas
@@ -30,12 +34,14 @@ public class VistaCargaNotas extends javax.swing.JFrame {
     public VistaCargaNotas() {
         initComponents();
         this.setLocationRelativeTo(null);
-        Connection con = (Connection) new Conexion("jdbc:mariadb://localhost:3306/sgulp_equipo_8", "root", "").buscarConexion();
+        conexion = new Conexion("jdbc:mariadb://localhost:3306/sgulp_equipo_8", "root", "");
+        java.sql.Connection con = conexion.buscarConexion();
         almData = new AlumnoDatos(con);
         insData = new InscripcionData(con);
         modelo = new DefaultTableModel(
         new Object [][] {},
         new String [] {"ID Materia", "Materia", "Nota"}
+                
     ) {
 
         @Override
@@ -240,46 +246,57 @@ public class VistaCargaNotas extends javax.swing.JFrame {
     }//GEN-LAST:event_SalirActionPerformed
 
     private void BtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnGuardarActionPerformed
-        try {
-            Alumno alumnoSelec = (Alumno) comboAlumno.getSelectedItem();
-            if (alumnoSelec == null) {
-                JOptionPane.showMessageDialog(this, "Porfavor, elegi un alumno");
-            }
-            
-            int idAlumno = alumnoSelec.getIdAlumno();
-            for (int i = 0; i < modelo.getRowCount(); i++) {
-                int IdMateria = (int)modelo.getValueAt(i, 0);
-                double nuevaNota = Double.parseDouble(modelo.getValueAt(i, 2).toString());
-                insData.actualizarNota(idAlumno, IdMateria, nuevaNota);
-            }
-            JOptionPane.showMessageDialog(this, "✅ Notas guardadas correctamente.");
+       try {
+    Alumno alumnoSelec = (Alumno) comboAlumno.getSelectedItem();
+    if (alumnoSelec == null) {
+        JOptionPane.showMessageDialog(this, "Por favor, elegí un alumno");
+        return;
+    }
 
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "⚠️ Verifique que todas las notas sean numéricas.");
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "❌ Error al guardar notas: " + e.getMessage());
-        }
+    if (tablaNotas.isEditing()) {
+        tablaNotas.getCellEditor().stopCellEditing();
+    }
 
+    int idAlumno = alumnoSelec.getIdAlumno();
+
+    for (int i = 0; i < modelo.getRowCount(); i++) {
+        int IdMateria = (int) modelo.getValueAt(i, 0);
+        double nuevaNota = Double.parseDouble(modelo.getValueAt(i, 2).toString());
+
+        System.out.println("Guardando nota: " + nuevaNota + " para idMateria " + IdMateria);
+
+        insData.actualizarNota(idAlumno, IdMateria, nuevaNota);
+    }
+ JOptionPane.showMessageDialog(this, "Notas guardadas correctamente.");
+    
+} catch (NumberFormatException e) {
+    JOptionPane.showMessageDialog(this, " Verifique que todas las notas sean numéricas.");
+} catch (Exception e) {
+    JOptionPane.showMessageDialog(this, "Error al guardar notas: " + e.getMessage());
+} 
+    
 
     }//GEN-LAST:event_BtnGuardarActionPerformed
 
     private void comboAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboAlumnoActionPerformed
-        limpiarTabla();
-        
-        Alumno alumnoSelec = (Alumno) comboAlumno.getSelectedItem();
-        
-        if (alumnoSelec == null) {
-            return;
-        }
-        List<Materia> materia = insData.obtenerMateriasCursadas(alumnoSelec.getIdAlumno());
-        for (Materia materia1 : materia) {
-            modelo.addRow(new Object[]{
-            materia1.getIdmateria(),
-                materia1.getNombre(),
-                0.0
-            });
-        }
-        
+       
+          limpiarTabla();
+
+    Alumno alumnoSelec = (Alumno) comboAlumno.getSelectedItem();
+    if (alumnoSelec == null) {
+        return;
+    }
+
+    // ✅ ahora la lista es de inscripciones, no de materias
+    List<Inscripcion> listaInscripciones = insData.obtenerMateriasCursadas(alumnoSelec.getIdAlumno());
+
+    for (Inscripcion ins : listaInscripciones) {
+        modelo.addRow(new Object[]{
+            ins.getMateria().getIdmateria(),
+            ins.getMateria().getNombre(),
+            ins.getNota()  // ✅ se muestra la nota real de la BD
+        });
+    }
     }//GEN-LAST:event_comboAlumnoActionPerformed
 
     /**

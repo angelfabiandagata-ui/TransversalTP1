@@ -33,8 +33,8 @@ public class VistaInscripcion extends javax.swing.JFrame {
     private MateriaData mData;
     private AlumnoDatos aData;
             
-    Conexion c = new Conexion("jdbc:mariadb://localhost:3306/sgulp_equipo_8", "root", "");
-    Connection con = (Connection) c.buscarConexion();
+Conexion c = new Conexion("jdbc:mariadb://localhost:3306/sgulp_equipo_8", "root", "");
+java.sql.Connection con = c.buscarConexion();
 
     
     
@@ -59,6 +59,7 @@ public class VistaInscripcion extends javax.swing.JFrame {
 //    
 //    }
         private void cargaAlumnos() {
+            
             for (Alumno items : ListaA) {
            jcalu.addItem(items);
             }
@@ -103,13 +104,13 @@ public class VistaInscripcion extends javax.swing.JFrame {
     Alumno alumnoSeleccionado = (Alumno) jcalu.getSelectedItem();
 
     if (alumnoSeleccionado != null) {
-        ArrayList<Materia> lista = (ArrayList<Materia>) inscData.obtenerMateriasCursadas(alumnoSeleccionado.getIdAlumno());
+        ArrayList<Inscripcion> lista = (ArrayList<Inscripcion>) inscData.obtenerMateriasCursadas(alumnoSeleccionado.getIdAlumno());
 
-        for (Materia m : lista) {
+        for (Inscripcion ins : lista) {
             modelo.addRow(new Object[]{
-                m.getIdmateria(),
-                m.getNombre(),
-                m.getAnio()
+                ins.getMateria().getIdmateria(),
+            ins.getMateria().getNombre(),
+            ins.getMateria().getAnio()
             });
         }
     }

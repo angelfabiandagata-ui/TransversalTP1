@@ -4,6 +4,13 @@
  */
 package Vista;
 
+import Modelo.Conexion;
+import Modelo.Materia;
+import Persistencia.InscripcionData;
+import Persistencia.MateriaData;
+import java.sql.Connection;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author user
@@ -11,14 +18,34 @@ package Vista;
 public class ListadeAlumnosporMateria extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ListadeAlumnosporMateria.class.getName());
-
+private MateriaData mData;
+private InscripcionData insData;
+private DefaultTableModel modelo;
     /**
      * Creates new form ListadeAlumnosporMateria
      */
     public ListadeAlumnosporMateria() {
         initComponents();
+       
+    Conexion c = new Conexion("jdbc:mariadb://localhost:3306/sgulp_equipo_8", "root", "");
+    Connection con = (Connection) c.buscarConexion();
+    mData = new MateriaData((Connection) con);
+    insData = new InscripcionData((Connection) con);
+    modelo = (DefaultTableModel) jTable1.getModel();
+    cargarMaterias();
     }
-
+private void cargarMaterias() {
+    comboMateria.removeAllItems();
+    for (Materia m : mData.listarMaterias()) {
+        comboMateria.addItem(m);
+    }
+}
+private void borrarFilasTabla() {
+    int filas = modelo.getRowCount() - 1;
+    for (int i = filas; i >= 0; i--) {
+        modelo.removeRow(i);
+    }
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -29,12 +56,12 @@ public class ListadeAlumnosporMateria extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jComboBox1 = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        comboMateria = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -82,10 +109,10 @@ public class ListadeAlumnosporMateria extends javax.swing.JFrame {
                     .addComponent(jButton1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(131, 131, 131)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(184, 184, 184)
+                        .addComponent(comboMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 456, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addContainerGap(58, Short.MAX_VALUE))
             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
@@ -95,8 +122,8 @@ public class ListadeAlumnosporMateria extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel1)
+                    .addComponent(comboMateria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -146,8 +173,8 @@ public class ListadeAlumnosporMateria extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<Materia> comboMateria;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

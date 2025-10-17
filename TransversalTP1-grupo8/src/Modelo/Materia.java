@@ -63,4 +63,9 @@ public class Materia {
     }
     
  //final   
+    
+    @Override
+public String toString() {
+    return nombre;
+}
 }

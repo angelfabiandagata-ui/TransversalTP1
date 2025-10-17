@@ -25,7 +25,7 @@ private MateriaData matData;
     public VistaMateria() {
         initComponents();
         conexion = new Conexion("jdbc:mariadb://localhost:3306/sgulp_equipo_8", "root", "");
-        con = (Connection) conexion.buscarConexion();
+        java.sql.Connection con = conexion.buscarConexion();
         matData = new MateriaData(con);
         this.setLocationRelativeTo(null);
     }

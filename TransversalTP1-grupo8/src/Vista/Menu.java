@@ -43,6 +43,7 @@ public class Menu extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenu_Clts = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuAlumXMateria = new javax.swing.JMenuItem();
         Salir = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
 
@@ -134,6 +135,14 @@ public class Menu extends javax.swing.JFrame {
         });
         jMenu_Clts.add(jMenuItem4);
 
+        jMenuAlumXMateria.setText("Alumno por Materia");
+        jMenuAlumXMateria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuAlumXMateriaActionPerformed(evt);
+            }
+        });
+        jMenu_Clts.add(jMenuAlumXMateria);
+
         jMenuBar1.add(jMenu_Clts);
 
         Salir.setText("Salir");
@@ -203,6 +212,12 @@ public class Menu extends javax.swing.JFrame {
     vista.setVisible(true); 
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
+    private void jMenuAlumXMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuAlumXMateriaActionPerformed
+       ListadeAlumnosporMateria vista = new ListadeAlumnosporMateria();
+    vista.setVisible(true);
+    vista.setLocationRelativeTo(null);
+    }//GEN-LAST:event_jMenuAlumXMateriaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -245,6 +260,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuItem jMenuAlumXMateria;
     private javax.swing.JMenu jMenuAlumno;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;

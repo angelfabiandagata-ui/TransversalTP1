@@ -13,11 +13,15 @@ import org.mariadb.jdbc.Connection;
 public class VistaAlumno extends javax.swing.JFrame {
     private AlumnoDatos alumnoData;
     private DefaultTableModel modelo;
+    private Conexion conexion;
+    private Connection con;
     /**
      * Creates new form VistaAlumno
      */
     public VistaAlumno() {
         initComponents();
+        conexion = new Conexion("jdbc:mariadb://localhost:3306/sgulp_equipo_8", "root", "");
+        java.sql.Connection con = conexion.buscarConexion();
         alumnoData = new AlumnoDatos();
         cargarCabecera();
         rellenarTabla();
