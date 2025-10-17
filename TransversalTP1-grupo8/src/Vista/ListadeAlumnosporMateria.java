@@ -4,11 +4,13 @@
  */
 package Vista;
 
+import Modelo.Alumno;
 import Modelo.Conexion;
 import Modelo.Materia;
 import Persistencia.InscripcionData;
 import Persistencia.MateriaData;
 import java.sql.Connection;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -79,7 +81,7 @@ private void borrarFilasTabla() {
                 {null, null, null, null}
             },
             new String [] {
-                "id-materia", "Nombre", "Año", "Estado"
+                "id-Alumno", "Nombre", "Dni", "Estado"
             }
         ) {
             Class[] types = new Class [] {
@@ -103,6 +105,12 @@ private void borrarFilasTabla() {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Listado de Alumnos por Materia");
         jLabel2.setToolTipText("");
+
+        comboMateria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboMateriaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -155,6 +163,27 @@ private void borrarFilasTabla() {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void cargarAlumnosPorMateria(int idMateria) {
+    borrarFilasTabla();
+
+    List<Alumno> alumnos = insData.obtenerAlumnosXMateria(idMateria);
+
+    for (Alumno a : alumnos) {
+        modelo.addRow(new Object[]{
+            a.getIdAlumno(),
+            a.getNombre() + " " + a.getApellido(),
+            a.getDni(),
+            a.getEstado()? "Activo" : "Inactivo"
+        });
+    }
+    }
+    private void comboMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboMateriaActionPerformed
+       Materia materiaSeleccionada = (Materia) comboMateria.getSelectedItem();
+    if (materiaSeleccionada != null) {
+        cargarAlumnosPorMateria(materiaSeleccionada.getIdmateria());
+    }
+    }//GEN-LAST:event_comboMateriaActionPerformed
 
     /**
      * @param args the command line arguments

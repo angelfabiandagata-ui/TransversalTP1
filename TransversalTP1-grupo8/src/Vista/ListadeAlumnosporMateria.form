@@ -106,9 +106,9 @@
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="4" rowCount="4">
-                    <Column editable="true" title="id-materia" type="java.lang.Integer"/>
+                    <Column editable="true" title="id-Alumno" type="java.lang.Integer"/>
                     <Column editable="true" title="Nombre" type="java.lang.String"/>
-                    <Column editable="true" title="A&#xf1;o" type="java.lang.Integer"/>
+                    <Column editable="true" title="Dni" type="java.lang.Integer"/>
                     <Column editable="true" title="Estado" type="java.lang.String"/>
                   </Table>
                 </Property>
@@ -167,6 +167,9 @@
               <StringArray count="0"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="comboMateriaActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Materia&gt;"/>
           </AuxValues>
