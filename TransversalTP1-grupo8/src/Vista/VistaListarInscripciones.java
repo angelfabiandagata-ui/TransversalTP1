@@ -29,6 +29,7 @@ public class VistaListarInscripciones extends javax.swing.JFrame {
      
     public VistaListarInscripciones() {
         initComponents();
+        this.setLocationRelativeTo(null);
         aData = new AlumnoDatos(con);
         insData = new InscripcionData(con);
         InscripcionData inscData = new InscripcionData();

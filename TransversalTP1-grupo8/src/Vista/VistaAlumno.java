@@ -20,6 +20,7 @@ public class VistaAlumno extends javax.swing.JFrame {
      */
     public VistaAlumno() {
         initComponents();
+        this.setLocationRelativeTo(null);
         conexion = new Conexion("jdbc:mariadb://localhost:3306/sgulp_equipo_8", "root", "");
         java.sql.Connection con = conexion.buscarConexion();
         alumnoData = new AlumnoDatos();

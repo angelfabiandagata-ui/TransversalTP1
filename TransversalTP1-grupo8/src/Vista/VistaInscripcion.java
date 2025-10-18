@@ -43,7 +43,7 @@ java.sql.Connection con = c.buscarConexion();
 
     public VistaInscripcion() {
         initComponents();
-
+        this.setLocationRelativeTo(null);
         aData = new AlumnoDatos(con);
         inscData = new InscripcionData(con);
 
